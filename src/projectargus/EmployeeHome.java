@@ -1,18 +1,41 @@
-
 package projectargus;
-
+import com.github.sarxos.webcam.Webcam;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author hansa
  */
 public class EmployeeHome extends javax.swing.JFrame {
+    Webcam webcam;
+    Boolean isRunning = false;
 
-    /**
-     * Creates new form EmployeeHome
-     */
     public EmployeeHome() {
         initComponents();
+        webcam = Webcam.getDefault();
+        webcam.setViewSize(new Dimension(640,480));
+    }
+    
+    // Method to start the webcam feed
+    private void startWebcam() {
+        if(!isRunning){
+            isRunning = true;
+            webcam.open();
+            new VideoFeedTaker().start();
+        }
+    }
+
+    // Method to stop the webcam feed
+    private void stopWebcam() {
+        if(isRunning){
+            isRunning = false;
+            webcam.close();
+        }
+        
     }
 
     /**
@@ -34,16 +57,15 @@ public class EmployeeHome extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         UserId = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        CAMfeed = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         Submit = new javax.swing.JButton();
-        Strat = new javax.swing.JButton();
+        Camfeed = new javax.swing.JLabel();
         Stop = new javax.swing.JButton();
+        Strat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 600));
 
         jPanel1.setBackground(new java.awt.Color(201, 34, 42));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 600));
@@ -57,34 +79,21 @@ public class EmployeeHome extends javax.swing.JFrame {
         jLabel2.setText("Employee Name :");
 
         UserName.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        UserName.setText("Manuja Dewmina");
+        UserName.setText("Hansa Hettiarachchi");
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("Position :");
 
         UserPosition.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        UserPosition.setText("Supervisor");
+        UserPosition.setText("Employee");
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel6.setText("Employee ID :");
 
         UserId.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        UserId.setText("admin123");
+        UserId.setText("emp123");
 
         jPanel4.setPreferredSize(new java.awt.Dimension(1076, 486));
-
-        CAMfeed.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout CAMfeedLayout = new javax.swing.GroupLayout(CAMfeed);
-        CAMfeed.setLayout(CAMfeedLayout);
-        CAMfeedLayout.setHorizontalGroup(
-            CAMfeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-        );
-        CAMfeedLayout.setVerticalGroup(
-            CAMfeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Box Number : ");
@@ -111,24 +120,35 @@ public class EmployeeHome extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Submit)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Submit)
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        Camfeed.setPreferredSize(new java.awt.Dimension(640, 480));
+
+        Stop.setBackground(new java.awt.Color(255, 0, 0));
+        Stop.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Stop.setText("STOP");
+        Stop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StopActionPerformed(evt);
+            }
+        });
 
         Strat.setBackground(new java.awt.Color(0, 255, 0));
         Strat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -139,43 +159,35 @@ public class EmployeeHome extends javax.swing.JFrame {
             }
         });
 
-        Stop.setBackground(new java.awt.Color(255, 0, 0));
-        Stop.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Stop.setText("STOP");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(CAMfeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(275, 275, 275)
-                        .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(Camfeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 60, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(CAMfeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Camfeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88)
+                .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -264,6 +276,7 @@ public class EmployeeHome extends javax.swing.JFrame {
 
     private void StratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StratActionPerformed
         // TODO add your handling code here:
+        startWebcam();
     }//GEN-LAST:event_StratActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -274,13 +287,34 @@ public class EmployeeHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_SubmitActionPerformed
 
+    private void StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopActionPerformed
+        // TODO add your handling code here:
+        stopWebcam();
+    }//GEN-LAST:event_StopActionPerformed
+
     /**
      * @param args the command line arguments
      */
-   
+   class VideoFeedTaker extends Thread{
+
+        @Override
+        public void run() {
+            while(isRunning){
+                try {
+                    Image image = webcam.getImage();
+                    Camfeed.setIcon(new ImageIcon(image));
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel CAMfeed;
+    private javax.swing.JLabel Camfeed;
     private javax.swing.JButton Stop;
     private javax.swing.JButton Strat;
     private javax.swing.JButton Submit;
