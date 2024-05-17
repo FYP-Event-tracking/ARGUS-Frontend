@@ -168,6 +168,10 @@ public class Login extends javax.swing.JFrame {
              adminHome.setLocationRelativeTo(null);
              this.dispose();
          } else {
+             EmployeeHome employeeHome = new EmployeeHome();
+             employeeHome.setVisible(true);
+             employeeHome.setLocationRelativeTo(null);
+             this.dispose();
 
          }
     }//GEN-LAST:event_LoginButtonActionPerformed
