@@ -122,10 +122,14 @@ public class AdminHome extends javax.swing.JFrame {
         jList3 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Project Argus");
+        setPreferredSize(new java.awt.Dimension(1156, 665));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(201, 34, 42));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1100, 600));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1150, 640));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1200, 586));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/projectargus/Logo-Argus 80x80.png"))); // NOI18N
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
@@ -173,22 +177,31 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel9.setText("Telephone  :");
 
         NewUserNameTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        NewUserNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         NewUserIdTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        NewUserIdTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         NewUserAddressTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        NewUserAddressTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         NewUserTelephoneTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        NewUserTelephoneTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel11.setText("ADD NEW USER");
 
+        NewUserTypeComboBox.setBackground(new java.awt.Color(254, 254, 254));
+        NewUserTypeComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         NewUserTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
+        NewUserTypeComboBox.setBorder(null);
 
         CreateNewUserButton.setBackground(new java.awt.Color(201, 34, 42));
         CreateNewUserButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         CreateNewUserButton.setForeground(new java.awt.Color(255, 255, 255));
         CreateNewUserButton.setText("Create User");
+        CreateNewUserButton.setBorder(null);
+        CreateNewUserButton.setFocusPainted(false);
         CreateNewUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateNewUserButtonActionPerformed(evt);
@@ -199,6 +212,8 @@ public class AdminHome extends javax.swing.JFrame {
         ClearAllNewUserButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         ClearAllNewUserButton.setForeground(new java.awt.Color(255, 255, 255));
         ClearAllNewUserButton.setText("Clear All");
+        ClearAllNewUserButton.setBorder(null);
+        ClearAllNewUserButton.setFocusPainted(false);
         ClearAllNewUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ClearAllNewUserButtonActionPerformed(evt);
@@ -276,7 +291,7 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(28, 28, 28)
                 .addComponent(CreateNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 34, Short.MAX_VALUE)
+                .addGap(18, 32, Short.MAX_VALUE)
                 .addComponent(CreateMsgLable)
                 .addGap(70, 70, 70))
         );
@@ -294,6 +309,8 @@ public class AdminHome extends javax.swing.JFrame {
         ViewUserSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         ViewUserSearchButton.setForeground(new java.awt.Color(255, 255, 255));
         ViewUserSearchButton.setText("Search");
+        ViewUserSearchButton.setBorder(null);
+        ViewUserSearchButton.setFocusPainted(false);
         ViewUserSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ViewUserSearchButtonActionPerformed(evt);
@@ -347,7 +364,7 @@ public class AdminHome extends javax.swing.JFrame {
                         .addGap(216, 216, 216)
                         .addComponent(ViewIdSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(ViewUserSearchButton))
+                        .addComponent(ViewUserSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(302, 302, 302)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -400,7 +417,7 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(ViewUserTelephoneLable))
                 .addGap(31, 31, 31)
                 .addComponent(ViewMsgLable)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View User Details", jPanel6);
@@ -412,26 +429,34 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel10.setText("User Name :");
 
         UpdateUserNameTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UpdateUserNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel14.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel14.setText("User Type   :");
 
+        UpdateUserTypeComboBox.setBackground(new java.awt.Color(254, 254, 254));
+        UpdateUserTypeComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         UpdateUserTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
+        UpdateUserTypeComboBox.setBorder(null);
 
         jLabel15.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel15.setText("Address      :");
 
         UpdateUserAddressTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UpdateUserAddressTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel16.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel16.setText("Telephone  :");
 
         UpdateUserTelephoneTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UpdateUserTelephoneTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         UpdateUserButton.setBackground(new java.awt.Color(201, 34, 42));
         UpdateUserButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UpdateUserButton.setForeground(new java.awt.Color(255, 255, 255));
         UpdateUserButton.setText("Update User");
+        UpdateUserButton.setBorder(null);
+        UpdateUserButton.setFocusPainted(false);
         UpdateUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpdateUserButtonActionPerformed(evt);
@@ -446,6 +471,8 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UpdateSearchButton.setForeground(new java.awt.Color(255, 255, 255));
         UpdateSearchButton.setText("Search");
+        UpdateSearchButton.setBorder(null);
+        UpdateSearchButton.setFocusPainted(false);
         UpdateSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpdateSearchButtonActionPerformed(evt);
@@ -456,6 +483,8 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateClearAllButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UpdateClearAllButton.setForeground(new java.awt.Color(255, 255, 255));
         UpdateClearAllButton.setText("Clear All");
+        UpdateClearAllButton.setBorder(null);
+        UpdateClearAllButton.setFocusPainted(false);
         UpdateClearAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpdateClearAllButtonActionPerformed(evt);
@@ -477,12 +506,12 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGap(216, 216, 216)
                 .addComponent(UpdateSerachIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(UpdateSearchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addComponent(UpdateSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(UpdateClearAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(154, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,6 +582,8 @@ public class AdminHome extends javax.swing.JFrame {
         DeleteSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         DeleteSearchButton.setForeground(new java.awt.Color(255, 255, 255));
         DeleteSearchButton.setText("Search");
+        DeleteSearchButton.setBorder(null);
+        DeleteSearchButton.setFocusPainted(false);
         DeleteSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteSearchButtonActionPerformed(evt);
@@ -593,6 +624,8 @@ public class AdminHome extends javax.swing.JFrame {
         DeleteUserButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         DeleteUserButton.setForeground(new java.awt.Color(255, 255, 255));
         DeleteUserButton.setText("Delete User");
+        DeleteUserButton.setBorder(null);
+        DeleteUserButton.setFocusPainted(false);
         DeleteUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteUserButtonActionPerformed(evt);
@@ -606,42 +639,39 @@ public class AdminHome extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(247, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DeleteMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(DeleteSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(223, 223, 223))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(DeleteUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(350, 350, 350)
-                        .addComponent(jLabel18)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(302, 302, 302)
+                        .addGap(355, 355, 355)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel23)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel20)
-                                .addComponent(jLabel21)
-                                .addComponent(jLabel19))
-                            .addComponent(jLabel22))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DeleteUserIdLabel)
-                            .addComponent(DeleteUserNameLabel)
-                            .addComponent(DeleteUserTypeLabel)
-                            .addComponent(DeleteUserTelephoneLabel)
-                            .addComponent(DeleteUserAddressLabel)))
+                            .addComponent(DeleteUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel23)
+                                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel20)
+                                        .addComponent(jLabel21)
+                                        .addComponent(jLabel19))
+                                    .addComponent(jLabel22))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DeleteUserIdLabel)
+                                    .addComponent(DeleteUserNameLabel)
+                                    .addComponent(DeleteUserTypeLabel)
+                                    .addComponent(DeleteUserTelephoneLabel)
+                                    .addComponent(DeleteUserAddressLabel)))))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DeleteMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DeleteSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(DeleteSearchButton)))
-                .addGap(242, 242, 242))
+                        .addGap(379, 379, 379)
+                        .addComponent(jLabel18)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -652,7 +682,7 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(DeleteSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DeleteSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(DeleteUserNameLabel))
@@ -672,11 +702,11 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(DeleteUserTelephoneLabel))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(DeleteUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(DeleteMsgLable)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Delete Users", jPanel8);
@@ -938,7 +968,7 @@ public class AdminHome extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(UserIdLable)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -967,28 +997,30 @@ public class AdminHome extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

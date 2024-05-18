@@ -75,25 +75,30 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("User Name");
 
         UserNameTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Password");
 
         PasswordTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        PasswordTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         LoginButton.setBackground(new java.awt.Color(201, 34, 42));
         LoginButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         LoginButton.setForeground(new java.awt.Color(255, 255, 255));
         LoginButton.setText("LOGIN");
+        LoginButton.setBorder(null);
+        LoginButton.setFocusPainted(false);
         LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginButtonActionPerformed(evt);
             }
         });
 
-        UserTypeComboBox.setBackground(new java.awt.Color(204, 204, 204));
+        UserTypeComboBox.setBackground(new java.awt.Color(254, 254, 254));
         UserTypeComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         UserTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+        UserTypeComboBox.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setText("User Type");
