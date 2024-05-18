@@ -464,7 +464,6 @@ public class AdminHome extends javax.swing.JFrame {
 
         UpdateMsgLable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UpdateMsgLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        UpdateMsgLable.setText("User Name :");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
