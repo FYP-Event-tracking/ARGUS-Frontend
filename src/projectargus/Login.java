@@ -1,5 +1,11 @@
 package projectargus;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import com.google.gson.Gson;
+
 public class Login extends javax.swing.JFrame {
 
     public Login() {
@@ -16,7 +22,7 @@ public class Login extends javax.swing.JFrame {
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        EmailTextField = new javax.swing.JTextField();
+        UserNameTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         PasswordTextField = new javax.swing.JPasswordField();
         LoginButton = new javax.swing.JButton();
@@ -65,9 +71,9 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("USER LOGIN");
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel2.setText("Email");
+        jLabel2.setText("User Name");
 
-        EmailTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserNameTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Password");
@@ -102,7 +108,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addGroup(LeftLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -122,7 +128,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(UserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,29 +166,52 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-         String userType = (String) UserTypeComboBox.getSelectedItem();
-         if (userType.equals("Admin")){
-             AdminHome adminHome = new AdminHome();
-             adminHome.setVisible(true);
-             adminHome.pack();
-             adminHome.setLocationRelativeTo(null);
-             this.dispose();
-         } else {
-             EmployeeHome employeeHome = new EmployeeHome();
-             employeeHome.setVisible(true);
-             employeeHome.setLocationRelativeTo(null);
-             this.dispose();
+        String userName = (String) UserNameTextField.getText();
+        String userType = (String) UserTypeComboBox.getSelectedItem();
+        
+        String apiUrl = "http://localhost:8002/api/User/username/" + userName;
+        
+        try{
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+        
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+            conn.disconnect();
+            
+            Gson gson = new Gson();
+            User user = gson.fromJson(content.toString(), User.class);
 
-         }
+            if (userType.equals("Admin")) {
+                AdminHome adminHome = new AdminHome(user);
+                adminHome.setVisible(true);
+                adminHome.pack();
+                adminHome.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                EmployeeHome employeeHome = new EmployeeHome();
+                employeeHome.setVisible(true);
+                employeeHome.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_LoginButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField EmailTextField;
     private javax.swing.JPanel Left;
     private javax.swing.JButton LoginButton;
     private javax.swing.JPasswordField PasswordTextField;
     private javax.swing.JPanel Right;
+    private javax.swing.JTextField UserNameTextField;
     private javax.swing.JComboBox<String> UserTypeComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
