@@ -5,9 +5,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
+import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import org.json.JSONObject;
 
 public class AdminHome extends javax.swing.JFrame {
@@ -129,37 +135,41 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel44 = new javax.swing.JLabel();
         UserLogSearchTextField = new javax.swing.JTextField();
         UserLogSearchButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
         UserLogList = new javax.swing.JList<>();
         jPanel10 = new javax.swing.JPanel();
         DateLogSearchTextField = new javax.swing.JTextField();
         jLabel62 = new javax.swing.JLabel();
         DateLogSearchButton = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
         DateLogList = new javax.swing.JList<>();
         jPanel11 = new javax.swing.JPanel();
         PackageLogSearchTextField = new javax.swing.JTextField();
         jLabel63 = new javax.swing.JLabel();
         PackageLogSearchButton = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
         PackageLogList = new javax.swing.JList<>();
         jPanel12 = new javax.swing.JPanel();
         LogIdLogSearchTextField = new javax.swing.JTextField();
         jLabel64 = new javax.swing.JLabel();
         LogIdLogSearchButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
         LogIdLogList = new javax.swing.JList<>();
         jPanel13 = new javax.swing.JPanel();
         ItemTypeLogSearchTextField = new javax.swing.JTextField();
         jLabel65 = new javax.swing.JLabel();
         ItemTypeLogSearchButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         ItemTypeLogList = new javax.swing.JList<>();
         jPanel14 = new javax.swing.JPanel();
         jLabel66 = new javax.swing.JLabel();
         AllLogSearchButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         AllLogList = new javax.swing.JList<>();
         LogOutLable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project Argus");
-        setPreferredSize(new java.awt.Dimension(1156, 665));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(201, 34, 42));
@@ -821,8 +831,12 @@ public class AdminHome extends javax.swing.JFrame {
         });
 
         UserLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        UserLogList.setVisibleRowCount(10);
-        jScrollPane1.setViewportView(UserLogList);
+        UserLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UserLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(UserLogList);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -831,17 +845,17 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(326, 326, 326)
                         .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(494, 494, 494)
                         .addComponent(UserLogSearchButton))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel44))
+                        .addGap(93, 93, 93)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(162, Short.MAX_VALUE))
+                        .addGap(439, 439, 439)
+                        .addComponent(jLabel44)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -853,8 +867,7 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(UserLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Using User ID", jPanel9);
@@ -877,6 +890,12 @@ public class AdminHome extends javax.swing.JFrame {
         });
 
         DateLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        DateLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DateLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(DateLogList);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -885,17 +904,17 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(254, 254, 254)
                         .addComponent(DateLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addComponent(DateLogSearchButton))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel62))
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(DateLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                        .addGap(392, 392, 392)
+                        .addComponent(jLabel62)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -907,8 +926,7 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(DateLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DateLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(DateLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Using Date", jPanel10);
@@ -932,38 +950,45 @@ public class AdminHome extends javax.swing.JFrame {
         });
 
         PackageLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        PackageLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PackageLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(PackageLogList);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel63)
+                .addGap(390, 390, 390))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(244, 244, 244)
                         .addComponent(PackageLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(47, 47, 47)
                         .addComponent(PackageLogSearchButton))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel63))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(PackageLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                        .addGap(82, 82, 82)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel63)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PackageLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PackageLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(PackageLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane3.addTab("Using Box ID", jPanel11);
@@ -986,6 +1011,12 @@ public class AdminHome extends javax.swing.JFrame {
         });
 
         LogIdLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        LogIdLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogIdLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(LogIdLogList);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -994,17 +1025,17 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(253, 253, 253)
                         .addComponent(LogIdLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(45, 45, 45)
                         .addComponent(LogIdLogSearchButton))
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel64))
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 836, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(LogIdLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                        .addGap(402, 402, 402)
+                        .addComponent(jLabel64)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1016,8 +1047,8 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(LogIdLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LogIdLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(LogIdLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane3.addTab("Using Log ID", jPanel12);
@@ -1039,7 +1070,15 @@ public class AdminHome extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(665, 308));
+
         ItemTypeLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        ItemTypeLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ItemTypeLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(ItemTypeLogList);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1048,30 +1087,30 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(269, 269, 269)
                         .addComponent(ItemTypeLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addComponent(ItemTypeLogSearchButton))
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel65))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(ItemTypeLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                        .addGap(79, 79, 79)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel65)
+                .addGap(339, 339, 339))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel65)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ItemTypeLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ItemTypeLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(ItemTypeLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Using Item Type", jPanel13);
@@ -1091,6 +1130,12 @@ public class AdminHome extends javax.swing.JFrame {
 
         AllLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         AllLogList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        AllLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AllLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(AllLogList);
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -1099,25 +1144,24 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(AllLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(392, 392, 392)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel66)
+                            .addComponent(AllLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(377, 377, 377)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel66, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AllLogSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(166, Short.MAX_VALUE))
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addComponent(jLabel66)
                 .addGap(18, 18, 18)
                 .addComponent(AllLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(AllLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane3.addTab("View All Logs", jPanel14);
@@ -1896,6 +1940,122 @@ public class AdminHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AllLogSearchButtonActionPerformed
 
+    private void UserLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_UserLogListMouseClicked
+
+    private void DateLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DateLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_DateLogListMouseClicked
+
+    private void PackageLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PackageLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_PackageLogListMouseClicked
+
+    private void LogIdLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogIdLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_LogIdLogListMouseClicked
+
+    private void ItemTypeLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemTypeLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_ItemTypeLogListMouseClicked
+
+    private void AllLogListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AllLogListMouseClicked
+        if (evt.getClickCount() == 1) {
+            JList list = (JList) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object selectedItem = list.getModel().getElementAt(index);
+                String itemText = selectedItem.toString();
+                String logId = extractLogId(itemText);
+                if (logId != null) {
+                    LogDetails logdetails = new LogDetails(logId);
+                    logdetails.setVisible(true);
+                    logdetails.pack();
+                    logdetails.setLocationRelativeTo(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_AllLogListMouseClicked
+
+    private String extractLogId(String itemText) {
+        Pattern pattern = Pattern.compile("LogId : (\\d+)");
+        Matcher matcher = pattern.matcher(itemText);
+        if (matcher.find()) {
+            return matcher.group(1); 
+        }
+        return null; 
+    }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> AllLogList;
@@ -2005,6 +2165,11 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
