@@ -14,6 +14,7 @@ public class AdminHome extends javax.swing.JFrame {
 
     private User user;
     private String user_service_endpoint;
+    private String log_service_endpoint;
     
     public AdminHome() {
         initComponents();
@@ -35,6 +36,7 @@ public class AdminHome extends javax.swing.JFrame {
         try (FileInputStream input = new FileInputStream("config.properties")) {
             prop.load(input);
             user_service_endpoint = prop.getProperty("user_service_endpoint");
+            log_service_endpoint = prop.getProperty("log_service_endpoint");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -125,20 +127,34 @@ public class AdminHome extends javax.swing.JFrame {
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel9 = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
-        jTextField22 = new javax.swing.JTextField();
-        LoginButton11 = new javax.swing.JButton();
+        UserLogSearchTextField = new javax.swing.JTextField();
+        UserLogSearchButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        UserLogList = new javax.swing.JList<>();
         jPanel10 = new javax.swing.JPanel();
-        jTextField23 = new javax.swing.JTextField();
+        DateLogSearchTextField = new javax.swing.JTextField();
         jLabel62 = new javax.swing.JLabel();
-        LoginButton12 = new javax.swing.JButton();
-        jList2 = new javax.swing.JList<>();
+        DateLogSearchButton = new javax.swing.JButton();
+        DateLogList = new javax.swing.JList<>();
         jPanel11 = new javax.swing.JPanel();
-        jTextField24 = new javax.swing.JTextField();
+        PackageLogSearchTextField = new javax.swing.JTextField();
         jLabel63 = new javax.swing.JLabel();
-        LoginButton13 = new javax.swing.JButton();
-        jList3 = new javax.swing.JList<>();
+        PackageLogSearchButton = new javax.swing.JButton();
+        PackageLogList = new javax.swing.JList<>();
+        jPanel12 = new javax.swing.JPanel();
+        LogIdLogSearchTextField = new javax.swing.JTextField();
+        jLabel64 = new javax.swing.JLabel();
+        LogIdLogSearchButton = new javax.swing.JButton();
+        LogIdLogList = new javax.swing.JList<>();
+        jPanel13 = new javax.swing.JPanel();
+        ItemTypeLogSearchTextField = new javax.swing.JTextField();
+        jLabel65 = new javax.swing.JLabel();
+        ItemTypeLogSearchButton = new javax.swing.JButton();
+        ItemTypeLogList = new javax.swing.JList<>();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel66 = new javax.swing.JLabel();
+        AllLogSearchButton = new javax.swing.JButton();
+        AllLogList = new javax.swing.JList<>();
         LogOutLable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -262,9 +278,7 @@ public class AdminHome extends javax.swing.JFrame {
                                 .addComponent(NewUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(NewUserPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel17)
-                                    .addGap(411, 411, 411))
+                                .addComponent(jLabel17)
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel5)
@@ -792,31 +806,23 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel44.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel44.setText("VIEW USER LOGS");
 
-        jTextField22.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField22.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jTextField22.setText("Search using User ID");
-        jTextField22.addActionListener(new java.awt.event.ActionListener() {
+        UserLogSearchTextField.setBackground(new java.awt.Color(204, 204, 204));
+        UserLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserLogSearchTextField.setText("Search using User ID");
+
+        UserLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        UserLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        UserLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        UserLogSearchButton.setText("Search");
+        UserLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField22ActionPerformed(evt);
+                UserLogSearchButtonActionPerformed(evt);
             }
         });
 
-        LoginButton11.setBackground(new java.awt.Color(201, 34, 42));
-        LoginButton11.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        LoginButton11.setForeground(new java.awt.Color(255, 255, 255));
-        LoginButton11.setText("Search");
-        LoginButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginButton11ActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        UserLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserLogList.setVisibleRowCount(10);
+        jScrollPane1.setViewportView(UserLogList);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -826,16 +832,16 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(LoginButton11))
+                        .addComponent(UserLogSearchButton))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(351, 351, 351)
                         .addComponent(jLabel44))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -844,42 +850,33 @@ public class AdminHome extends javax.swing.JFrame {
                 .addComponent(jLabel44)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LoginButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UserLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
-        jTabbedPane3.addTab("View User Logs", jPanel9);
+        jTabbedPane3.addTab("Using User ID", jPanel9);
 
-        jTextField23.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField23.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jTextField23.setText("Search using Date : dd/mm/yyyy");
-        jTextField23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField23ActionPerformed(evt);
-            }
-        });
+        DateLogSearchTextField.setBackground(new java.awt.Color(204, 204, 204));
+        DateLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        DateLogSearchTextField.setText("Search using Date : yyyy-mm-dd");
 
         jLabel62.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel62.setText("VIEW DAILY LOGS");
 
-        LoginButton12.setBackground(new java.awt.Color(201, 34, 42));
-        LoginButton12.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        LoginButton12.setForeground(new java.awt.Color(255, 255, 255));
-        LoginButton12.setText("Search");
-        LoginButton12.addActionListener(new java.awt.event.ActionListener() {
+        DateLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        DateLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        DateLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        DateLogSearchButton.setText("Search");
+        DateLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginButton12ActionPerformed(evt);
+                DateLogSearchButtonActionPerformed(evt);
             }
         });
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        DateLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -889,16 +886,16 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DateLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(LoginButton12))
+                        .addComponent(DateLogSearchButton))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(351, 351, 351)
                         .addComponent(jLabel62))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(jList2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(145, Short.MAX_VALUE))
+                        .addComponent(DateLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -907,42 +904,34 @@ public class AdminHome extends javax.swing.JFrame {
                 .addComponent(jLabel62)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LoginButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DateLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DateLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jList2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DateLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("View Daily Logs", jPanel10);
+        jTabbedPane3.addTab("Using Date", jPanel10);
 
-        jTextField24.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField24.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jTextField24.setText("Search using Package ID");
-        jTextField24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField24ActionPerformed(evt);
-            }
-        });
+        PackageLogSearchTextField.setBackground(new java.awt.Color(204, 204, 204));
+        PackageLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        PackageLogSearchTextField.setText("Search using Box ID");
 
         jLabel63.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel63.setText("VIEW PACKAGE LOGS");
+        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel63.setText("VIEW BOX ID LOG");
 
-        LoginButton13.setBackground(new java.awt.Color(201, 34, 42));
-        LoginButton13.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        LoginButton13.setForeground(new java.awt.Color(255, 255, 255));
-        LoginButton13.setText("Search");
-        LoginButton13.addActionListener(new java.awt.event.ActionListener() {
+        PackageLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        PackageLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        PackageLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        PackageLogSearchButton.setText("Search");
+        PackageLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginButton13ActionPerformed(evt);
+                PackageLogSearchButtonActionPerformed(evt);
             }
         });
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed", "12/05/2024             Package No: TRU123T          User ID: USER345    13:43:23 - 13:55:12    Completed" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        PackageLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -952,16 +941,16 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(PackageLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(LoginButton13))
+                        .addComponent(PackageLogSearchButton))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(351, 351, 351)
                         .addComponent(jLabel63))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(109, 109, 109)
-                        .addComponent(jList3, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                        .addComponent(PackageLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -970,14 +959,168 @@ public class AdminHome extends javax.swing.JFrame {
                 .addComponent(jLabel63)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LoginButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PackageLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PackageLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jList3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PackageLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("View Package Logs", jPanel11);
+        jTabbedPane3.addTab("Using Box ID", jPanel11);
+
+        LogIdLogSearchTextField.setBackground(new java.awt.Color(204, 204, 204));
+        LogIdLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        LogIdLogSearchTextField.setText("Search using Log ID");
+
+        jLabel64.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel64.setText("VIEW LOG ID LOG");
+
+        LogIdLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        LogIdLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        LogIdLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        LogIdLogSearchButton.setText("Search");
+        LogIdLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogIdLogSearchButtonActionPerformed(evt);
+            }
+        });
+
+        LogIdLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addComponent(LogIdLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LogIdLogSearchButton))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(351, 351, 351)
+                        .addComponent(jLabel64))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(LogIdLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel64)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LogIdLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LogIdLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(LogIdLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Using Log ID", jPanel12);
+
+        ItemTypeLogSearchTextField.setBackground(new java.awt.Color(204, 204, 204));
+        ItemTypeLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        ItemTypeLogSearchTextField.setText("Search using Item Type");
+
+        jLabel65.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel65.setText("VIEW ITEM TYPE LOGS");
+
+        ItemTypeLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        ItemTypeLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        ItemTypeLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        ItemTypeLogSearchButton.setText("Search");
+        ItemTypeLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemTypeLogSearchButtonActionPerformed(evt);
+            }
+        });
+
+        ItemTypeLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addComponent(ItemTypeLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ItemTypeLogSearchButton))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(351, 351, 351)
+                        .addComponent(jLabel65))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(ItemTypeLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel65)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ItemTypeLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ItemTypeLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(ItemTypeLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Using Item Type", jPanel13);
+
+        jLabel66.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel66.setText("VIEW ALL LOGS");
+
+        AllLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
+        AllLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        AllLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        AllLogSearchButton.setText("Get All Logs");
+        AllLogSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AllLogSearchButtonActionPerformed(evt);
+            }
+        });
+
+        AllLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        AllLogList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(AllLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(377, 377, 377)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel66, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AllLogSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel66)
+                .addGap(18, 18, 18)
+                .addComponent(AllLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(AllLogList, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("View All Logs", jPanel14);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1060,7 +1203,6 @@ public class AdminHome extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
                                 .addComponent(UserIdLable)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1447,29 +1589,147 @@ public class AdminHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeleteUserButtonActionPerformed
 
-    private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField22ActionPerformed
+    private void UserLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserLogSearchButtonActionPerformed
+        String logSearch = UserLogSearchTextField.getText();
+        UserLogList.setListData(new String[0]);
 
-    private void LoginButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginButton11ActionPerformed
+        if (logSearch.isEmpty()) {
+            UserLogList.setListData(new String[]{"No logs for that User ID available"});      
+        } else {
+            String apiUrl = log_service_endpoint + "Log/userid/" + logSearch;
 
-    private void jTextField23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField23ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField23ActionPerformed
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
 
-    private void LoginButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginButton12ActionPerformed
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
 
-    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField24ActionPerformed
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
 
-    private void LoginButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginButton13ActionPerformed
+                    Gson gson = new Gson();
+                    Log[] logs = gson.fromJson(content.toString(), Log[].class);
+
+                    if (logs.length == 0) {
+                        UserLogList.setListData(new String[]{"No logs found for this User ID"});
+                    } else {
+                        String[] logEntries = new String[logs.length];
+                        for (int i = 0; i < logs.length; i++) {
+                            logEntries[i] = logs[i].toString();
+                        }
+                        UserLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    UserLogList.setListData(new String[]{"No logs for that User ID available"});      
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_UserLogSearchButtonActionPerformed
+
+    private void DateLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateLogSearchButtonActionPerformed
+        String logSearch = DateLogSearchTextField.getText();
+        DateLogList.setListData(new String[0]);
+
+        if (logSearch.isEmpty()) {
+            DateLogList.setListData(new String[]{"No logs for that Date available"});      
+        } else {
+            String apiUrl = log_service_endpoint + "Log/date/" + logSearch;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
+
+                    Gson gson = new Gson();
+                    Log[] logs = gson.fromJson(content.toString(), Log[].class);
+
+                    if (logs.length == 0) {
+                        DateLogList.setListData(new String[]{"No logs found for this Date"});
+                    } else {
+                        String[] logEntries = new String[logs.length];
+                        for (int i = 0; i < logs.length; i++) {
+                            logEntries[i] = logs[i].toString();
+                        }
+                        DateLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    DateLogList.setListData(new String[]{"No logs for that Date available"});      
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_DateLogSearchButtonActionPerformed
+
+    private void PackageLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PackageLogSearchButtonActionPerformed
+        String logSearch = PackageLogSearchTextField.getText();
+        PackageLogList.setListData(new String[0]);
+
+        if (logSearch.isEmpty()) {
+            PackageLogList.setListData(new String[]{"No logs for that Box ID available"});
+        } else {
+            String apiUrl = log_service_endpoint + "Log/boxid/" + logSearch;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
+
+                    Gson gson = new Gson();
+                    Log log = gson.fromJson(content.toString(), Log.class);
+
+                    if (log == null) {
+                        PackageLogList.setListData(new String[]{"No logs found for this Box ID"});
+                    } else {
+                        String[] logEntries = new String[1];
+                        logEntries[0] = log.toString(); 
+                        PackageLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    PackageLogList.setListData(new String[]{"No logs for that Box ID available"});
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_PackageLogSearchButtonActionPerformed
 
     private void ClearAllNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearAllNewUserButtonActionPerformed
         NewUserNameTextField.setText("");
@@ -1499,11 +1759,153 @@ public class AdminHome extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_LogOutLableMouseClicked
 
+    private void LogIdLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogIdLogSearchButtonActionPerformed
+        String logSearch = LogIdLogSearchTextField.getText();
+        LogIdLogList.setListData(new String[0]);
+
+        if (logSearch.isEmpty()) {
+            LogIdLogList.setListData(new String[]{"No logs for that Log ID available"});
+        } else {
+            String apiUrl = log_service_endpoint + "Log/logid/" + logSearch;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
+
+                    Gson gson = new Gson();
+                    Log log = gson.fromJson(content.toString(), Log.class);
+
+                    if (log == null) {
+                        LogIdLogList.setListData(new String[]{"No logs found for this Log ID"});
+                    } else {
+                        String[] logEntries = new String[1];
+                        logEntries[0] = log.toString(); 
+                        LogIdLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    LogIdLogList.setListData(new String[]{"No logs for that Log ID available"});
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_LogIdLogSearchButtonActionPerformed
+
+    private void ItemTypeLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemTypeLogSearchButtonActionPerformed
+        String logSearch = ItemTypeLogSearchTextField.getText();
+        ItemTypeLogList.setListData(new String[0]);
+
+        if (logSearch.isEmpty()) {
+            ItemTypeLogList.setListData(new String[]{"No logs for that Item Type available"});      
+        } else {
+            String apiUrl = log_service_endpoint + "Log/itemtype/" + logSearch;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
+
+                    Gson gson = new Gson();
+                    Log[] logs = gson.fromJson(content.toString(), Log[].class);
+
+                    if (logs.length == 0) {
+                        ItemTypeLogList.setListData(new String[]{"No logs found for this Item Type"});
+                    } else {
+                        String[] logEntries = new String[logs.length];
+                        for (int i = 0; i < logs.length; i++) {
+                            logEntries[i] = logs[i].toString();
+                        }
+                        ItemTypeLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    ItemTypeLogList.setListData(new String[]{"No logs for that Item Type available"});      
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_ItemTypeLogSearchButtonActionPerformed
+
+    private void AllLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AllLogSearchButtonActionPerformed
+        AllLogList.setListData(new String[0]);
+
+        String apiUrl = log_service_endpoint + "Log";
+
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder content = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                conn.disconnect();
+
+                Gson gson = new Gson();
+                Log[] logs = gson.fromJson(content.toString(), Log[].class);
+
+                if (logs.length == 0) {
+                    AllLogList.setListData(new String[]{"No logs found"});
+                } else {
+                    String[] logEntries = new String[logs.length];
+                    for (int i = 0; i < logs.length; i++) {
+                        logEntries[i] = logs[i].toString();
+                    }
+                    AllLogList.setListData(logEntries);
+                }
+
+            } else {
+                AllLogList.setListData(new String[]{"No logs found"});      
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_AllLogSearchButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> AllLogList;
+    private javax.swing.JButton AllLogSearchButton;
     private javax.swing.JButton ClearAllNewUserButton;
     private javax.swing.JLabel CreateMsgLable;
     private javax.swing.JButton CreateNewUserButton;
+    private javax.swing.JList<String> DateLogList;
+    private javax.swing.JButton DateLogSearchButton;
+    private javax.swing.JTextField DateLogSearchTextField;
     private javax.swing.JLabel DeleteMsgLable;
     private javax.swing.JButton DeleteSearchButton;
     private javax.swing.JTextField DeleteSearchTextField;
@@ -1513,16 +1915,22 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel DeleteUserNameLabel;
     private javax.swing.JLabel DeleteUserTelephoneLabel;
     private javax.swing.JLabel DeleteUserTypeLabel;
+    private javax.swing.JList<String> ItemTypeLogList;
+    private javax.swing.JButton ItemTypeLogSearchButton;
+    private javax.swing.JTextField ItemTypeLogSearchTextField;
+    private javax.swing.JList<String> LogIdLogList;
+    private javax.swing.JButton LogIdLogSearchButton;
+    private javax.swing.JTextField LogIdLogSearchTextField;
     private javax.swing.JLabel LogOutLable;
-    private javax.swing.JButton LoginButton11;
-    private javax.swing.JButton LoginButton12;
-    private javax.swing.JButton LoginButton13;
     private javax.swing.JTextField NewUserAddressTextField;
     private javax.swing.JTextField NewUserIdTextField;
     private javax.swing.JTextField NewUserNameTextField;
     private javax.swing.JTextField NewUserPasswordTextField;
     private javax.swing.JTextField NewUserTelephoneTextField;
     private javax.swing.JComboBox<String> NewUserTypeComboBox;
+    private javax.swing.JList<String> PackageLogList;
+    private javax.swing.JButton PackageLogSearchButton;
+    private javax.swing.JTextField PackageLogSearchTextField;
     private javax.swing.JButton UpdateClearAllButton;
     private javax.swing.JLabel UpdateMsgLable;
     private javax.swing.JButton UpdateSearchButton;
@@ -1534,6 +1942,9 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTextField UpdateUserTelephoneTextField;
     private javax.swing.JComboBox<String> UpdateUserTypeComboBox;
     private javax.swing.JLabel UserIdLable;
+    private javax.swing.JList<String> UserLogList;
+    private javax.swing.JButton UserLogSearchButton;
+    private javax.swing.JTextField UserLogSearchTextField;
     private javax.swing.JLabel UserNameLable;
     private javax.swing.JLabel UserTypeLable;
     private javax.swing.JTextField ViewIdSearchTextField;
@@ -1573,15 +1984,18 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1594,8 +2008,5 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField24;
     // End of variables declaration//GEN-END:variables
 }
