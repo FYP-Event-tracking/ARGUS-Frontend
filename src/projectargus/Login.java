@@ -5,13 +5,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
+import java.util.Properties;
+import java.io.FileInputStream;
 
 public class Login extends javax.swing.JFrame {
-
+    
+    private String user_service_endpoint;
+    
     public Login() {
         initComponents();
+        loadConfig();
     }
     
+    private void loadConfig() {
+        Properties prop = new Properties();
+        try (FileInputStream input = new FileInputStream("config.properties")) {
+            prop.load(input);
+            user_service_endpoint = prop.getProperty("user_service_endpoint");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -22,16 +37,15 @@ public class Login extends javax.swing.JFrame {
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        UserNameTextField = new javax.swing.JTextField();
+        UserIdTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         PasswordTextField = new javax.swing.JPasswordField();
         LoginButton = new javax.swing.JButton();
-        UserTypeComboBox = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         LoginMsgLable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project Argus");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(201, 34, 42));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -72,10 +86,10 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("USER LOGIN");
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel2.setText("User Name");
+        jLabel2.setText("User ID");
 
-        UserNameTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        UserNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        UserIdTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserIdTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Password");
@@ -95,14 +109,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        UserTypeComboBox.setBackground(new java.awt.Color(254, 254, 254));
-        UserTypeComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        UserTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
-        UserTypeComboBox.setBorder(null);
-
-        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel4.setText("User Type");
-
         LoginMsgLable.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         LoginMsgLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -117,12 +123,8 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
                             .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(UserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UserIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addGroup(LeftLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(UserTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(LeftLayout.createSequentialGroup()
                                 .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -140,16 +142,12 @@ public class Login extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(UserIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(UserTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(87, 87, 87)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoginMsgLable))
@@ -180,18 +178,21 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String userName = (String) UserNameTextField.getText();
-        String userType = (String) UserTypeComboBox.getSelectedItem();
-        if (userName.isEmpty()){
-            LoginMsgLable.setText("Error : Invalid User Name ");
+        String userId = (String) UserIdTextField.getText();
+        String password = (String) PasswordTextField.getText();
+        
+        if (userId.isEmpty()){
+            LoginMsgLable.setText("Error : Invalid User ID ");
+        } else if (password.isEmpty()) {
+            LoginMsgLable.setText("Error : Invalid User Password ");
         } else {
-            String apiUrl = "http://localhost:8002/api/User/username/" + userName;
+            String apiUrlUserLogin = user_service_endpoint + "UserLogin/userid/" + userId;
 
             try{
-                URL url = new URL(apiUrl);
+                URL url = new URL(apiUrlUserLogin);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
-                
+
                 int responseCode = conn.getResponseCode();
                 if (responseCode == 200) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -205,25 +206,55 @@ public class Login extends javax.swing.JFrame {
                     conn.disconnect();
 
                     Gson gson = new Gson();
-                    User user = gson.fromJson(content.toString(), User.class);
+                    UserLogin userLogin = gson.fromJson(content.toString(), UserLogin.class);
+                    
+                    String apiUrlUserData = user_service_endpoint + "User/userid/" + userId;
+                    
+                    try{
+                        URL userurl = new URL(apiUrlUserData);
+                        HttpURLConnection userconn = (HttpURLConnection) userurl.openConnection();
+                        userconn.setRequestMethod("GET");
 
-                    if (userType.equals("Admin")) {
-                        AdminHome adminHome = new AdminHome(user);
-                        adminHome.setVisible(true);
-                        adminHome.pack();
-                        adminHome.setLocationRelativeTo(null);
-                        this.dispose();
-                    } else {
-                        EmployeeHome employeeHome = new EmployeeHome();
-                        employeeHome.setVisible(true);
-                        employeeHome.setLocationRelativeTo(null);
-                        this.dispose();
-                    }
+                        int userresponseCode = userconn.getResponseCode();
+                        if (userresponseCode == 200) {
+                    
+                            BufferedReader userin = new BufferedReader(new InputStreamReader(userconn.getInputStream()));
+                            String userinputLine;
+                            StringBuilder usercontent = new StringBuilder();
+
+                            while ((userinputLine = userin.readLine()) != null) {
+                                usercontent.append(userinputLine);
+                            }
+                            userin.close();
+                            userconn.disconnect();
+
+                            Gson usergson = new Gson();
+                            User user = usergson.fromJson(usercontent.toString(), User.class);
+
+                            if (userLogin.getUserType().equals("Admin")) {
+                                AdminHome adminHome = new AdminHome(user);
+                                adminHome.setVisible(true);
+                                adminHome.pack();
+                                adminHome.setLocationRelativeTo(null);
+                                this.dispose();
+                            } else if (userLogin.getUserType().equals("User")) {
+                                EmployeeHome employeeHome = new EmployeeHome();
+                                employeeHome.setVisible(true);
+                                employeeHome.setLocationRelativeTo(null);
+                                employeeHome.pack();
+                                this.dispose();
+                            }
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        LoginMsgLable.setText("Error : Server Error ");
+                    }   
                 } else {
-                    LoginMsgLable.setText("Error : Invalid User Name ");
+                    LoginMsgLable.setText("Error : Invalid Login Inputs ");
                 }
             } catch (Exception e){
                 e.printStackTrace();
+                LoginMsgLable.setText("Error : Server Error ");
             }
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
@@ -235,12 +266,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel LoginMsgLable;
     private javax.swing.JPasswordField PasswordTextField;
     private javax.swing.JPanel Right;
-    private javax.swing.JTextField UserNameTextField;
-    private javax.swing.JComboBox<String> UserTypeComboBox;
+    private javax.swing.JTextField UserIdTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

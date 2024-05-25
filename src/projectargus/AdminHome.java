@@ -5,24 +5,39 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
+import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.Properties;
 import org.json.JSONObject;
 
 public class AdminHome extends javax.swing.JFrame {
 
     private User user;
+    private String user_service_endpoint;
     
     public AdminHome() {
         initComponents();
+        loadConfig();
     }
     
     public AdminHome(User user){
         this.user = user;
         initComponents();
+        loadConfig();
         
         UserNameLable.setText(user.getUserName());
         UserTypeLable.setText(user.getUserType());
         UserIdLable.setText(user.getUserId());
+    }
+    
+    private void loadConfig() {
+        Properties prop = new Properties();
+        try (FileInputStream input = new FileInputStream("config.properties")) {
+            prop.load(input);
+            user_service_endpoint = prop.getProperty("user_service_endpoint");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -56,6 +71,8 @@ public class AdminHome extends javax.swing.JFrame {
         CreateNewUserButton = new javax.swing.JButton();
         ClearAllNewUserButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
+        NewUserPasswordTextField = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         ViewIdSearchTextField = new javax.swing.JTextField();
@@ -86,6 +103,8 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateSearchButton = new javax.swing.JButton();
         UpdateClearAllButton = new javax.swing.JButton();
         UpdateMsgLable = new javax.swing.JLabel();
+        UpdateUserPasswordTextField = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         DeleteSearchTextField = new javax.swing.JTextField();
@@ -120,6 +139,7 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel63 = new javax.swing.JLabel();
         LoginButton13 = new javax.swing.JButton();
         jList3 = new javax.swing.JList<>();
+        LogOutLable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project Argus");
@@ -223,6 +243,12 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel13.setText("User Name :");
 
+        NewUserPasswordTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        NewUserPasswordTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel17.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel17.setText("Password :");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -232,32 +258,41 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel13))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(NewUserTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(NewUserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(NewUserIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(NewUserAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(CreateMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(NewUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(NewUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(NewUserPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addComponent(jLabel17)
+                                    .addGap(411, 411, 411))
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel13))
+                                    .addGap(36, 36, 36)
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(NewUserTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(NewUserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(NewUserIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(NewUserAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(151, 151, 151)
                         .addComponent(ClearAllNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addGap(473, 473, 473))
+                        .addGap(473, 473, 473))))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CreateMsgLable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(CreateNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(458, 458, 458))))
+                        .addGap(78, 78, 78)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,15 +320,19 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(NewUserAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NewUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NewUserPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17))
+                .addGap(18, 18, 18)
                 .addComponent(CreateNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 32, Short.MAX_VALUE)
+                .addGap(18, 29, Short.MAX_VALUE)
                 .addComponent(CreateMsgLable)
-                .addGap(70, 70, 70))
+                .addGap(34, 34, 34))
         );
 
         jTabbedPane2.addTab("Add new User", jPanel5);
@@ -417,7 +456,7 @@ public class AdminHome extends javax.swing.JFrame {
                     .addComponent(ViewUserTelephoneLable))
                 .addGap(31, 31, 31)
                 .addComponent(ViewMsgLable)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View User Details", jPanel6);
@@ -494,6 +533,12 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateMsgLable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UpdateMsgLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        UpdateUserPasswordTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UpdateUserPasswordTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel24.setText("Password  :");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -507,12 +552,24 @@ public class AdminHome extends javax.swing.JFrame {
                 .addComponent(UpdateSerachIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(UpdateSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(UpdateClearAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(212, 212, 212)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(UpdateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(123, 123, 123))
+                    .addComponent(UpdateMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addGap(411, 411, 411))
+                    .addComponent(UpdateUserPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
@@ -524,17 +581,10 @@ public class AdminHome extends javax.swing.JFrame {
                             .addComponent(UpdateUserAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(UpdateUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(UpdateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(171, 171, 171))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(38, 38, 38)
                         .addComponent(UpdateUserNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(287, 287, 287))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(UpdateMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,11 +612,15 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UpdateUserTelephoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UpdateUserPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(UpdateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(UpdateMsgLable)
-                .addGap(30, 30, 30))
+                .addGap(17, 17, 17))
         );
 
         jTabbedPane2.addTab("Update User Details", jPanel7);
@@ -706,7 +760,7 @@ public class AdminHome extends javax.swing.JFrame {
                 .addComponent(DeleteUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(DeleteMsgLable)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Delete Users", jPanel8);
@@ -944,50 +998,68 @@ public class AdminHome extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Log Management", jPanel4);
 
+        LogOutLable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        LogOutLable.setForeground(new java.awt.Color(0, 0, 204));
+        LogOutLable.setText("Log Out");
+        LogOutLable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogOutLableMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UserNameLable))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UserTypeLable))
+                                .addComponent(UserTypeLable)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(LogOutLable))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UserIdLable)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(UserIdLable))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(UserNameLable)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(UserNameLable))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(UserTypeLable))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(UserIdLable))))
+                        .addComponent(LogOutLable)
+                        .addGap(34, 34, 34))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(UserNameLable))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(UserTypeLable))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(UserIdLable)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1032,19 +1104,29 @@ public class AdminHome extends javax.swing.JFrame {
         String newUserType = (String) NewUserTypeComboBox.getSelectedItem();
         String newUserAddress = (String) NewUserAddressTextField.getText();
         String newUserTelephone = (String) NewUserTelephoneTextField.getText();
+        String newUserPassword = (String) NewUserPasswordTextField.getText();
         
-        if (newUserName.isEmpty() || newUserId.isEmpty() || newUserType.isEmpty() || newUserAddress.isEmpty() || newUserTelephone.isEmpty()) {
+        if (newUserName.isEmpty() || newUserId.isEmpty() || newUserType.isEmpty() || newUserAddress.isEmpty() || newUserTelephone.isEmpty() || newUserPassword.isEmpty()) {
             CreateMsgLable.setText("Error : Input all details to create user");
         } else {
-            String apiUrl = "http://localhost:8002/api/User";
+            
+            String apiUrlUserData = user_service_endpoint + "User/";
+            String apiUrlUserLogin = user_service_endpoint + "UserLogin/";
 
             try{
-                URL url = new URL(apiUrl);
+                URL url = new URL(apiUrlUserData);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json; utf-8");
                 conn.setRequestProperty("Accept", "application/json");
                 conn.setDoOutput(true);
+                
+                URL loginurl = new URL(apiUrlUserLogin);
+                HttpURLConnection loginconn = (HttpURLConnection) loginurl.openConnection();
+                loginconn.setRequestMethod("POST");
+                loginconn.setRequestProperty("Content-Type", "application/json; utf-8");
+                loginconn.setRequestProperty("Accept", "application/json");
+                loginconn.setDoOutput(true);
 
                 JSONObject jsonInput = new JSONObject();
                 jsonInput.put("userId", newUserId);
@@ -1052,27 +1134,56 @@ public class AdminHome extends javax.swing.JFrame {
                 jsonInput.put("userType", newUserType);
                 jsonInput.put("userAddress", newUserAddress);
                 jsonInput.put("userTelephone", newUserTelephone);
+                
+                JSONObject loginjsonInput = new JSONObject();
+                loginjsonInput.put("userId", newUserId);
+                loginjsonInput.put("userType", newUserType);
+                loginjsonInput.put("userPassword", newUserPassword);
 
                 try(OutputStream os = conn.getOutputStream()) {
                     byte[] input = jsonInput.toString().getBytes("utf-8");
                     os.write(input, 0, input.length);           
                 }
+                
+                try(OutputStream loginos = loginconn.getOutputStream()) {
+                    byte[] logininput = loginjsonInput.toString().getBytes("utf-8");
+                    loginos.write(logininput, 0, logininput.length);           
+                }
 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    try(BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
-                        StringBuilder response = new StringBuilder();
-                        String responseLine = null;
-                        while ((responseLine = br.readLine()) != null) {
-                            response.append(responseLine.trim());
+                    int loginresponseCode = loginconn.getResponseCode();
+                    if (loginresponseCode == HttpURLConnection.HTTP_OK) {
+                        
+                        try(BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                            StringBuilder response = new StringBuilder();
+                            String responseLine = null;
+                            while ((responseLine = br.readLine()) != null) {
+                                response.append(responseLine.trim());
+                            }
+                            System.out.println(response.toString());
+                            CreateMsgLable.setText("User Created successfully");
                         }
-                        System.out.println(response.toString());
-                        CreateMsgLable.setText("User Created successfully");
-                    }
+                        
+                        try(BufferedReader loginbr = new BufferedReader(new InputStreamReader(loginconn.getInputStream(), "utf-8"))) {
+                            StringBuilder loginresponse = new StringBuilder();
+                            String loginresponseLine = null;
+                            while ((loginresponseLine = loginbr.readLine()) != null) {
+                                loginresponse.append(loginresponseLine.trim());
+                            }
+                            System.out.println(loginresponse.toString());
+                            CreateMsgLable.setText("User Created successfully");
+                        }
+                        
+                    } else {
+                    System.out.println("User Not Created");
+                    CreateMsgLable.setText("User Not Created");    
+                    }   
                 } else {
                     System.out.println("User Not Created");
                     CreateMsgLable.setText("User Not Created");    
                 }
+                loginconn.disconnect();
                 conn.disconnect();
             } catch (Exception e){
                 e.printStackTrace();
@@ -1086,12 +1197,14 @@ public class AdminHome extends javax.swing.JFrame {
         String updateUserType = (String) UpdateUserTypeComboBox.getSelectedItem();
         String updateUserAddress = (String) UpdateUserAddressTextField.getText();
         String updateUserTelephone = (String) UpdateUserTelephoneTextField.getText();
+        String updateUserPassword = (String) UpdateUserPasswordTextField.getText();
         
-        if (updateUserName.isEmpty() || updateUserId.isEmpty() || updateUserType.isEmpty() || updateUserAddress.isEmpty() || updateUserTelephone.isEmpty()) {
+        if (updateUserName.isEmpty() || updateUserId.isEmpty() || updateUserType.isEmpty() || updateUserAddress.isEmpty() || updateUserTelephone.isEmpty() || updateUserPassword.isEmpty()) {
             UpdateMsgLable.setText("Error : Input all details to update user");
         } else {
         
-            String apiUrl = "http://localhost:8002/api/User/"+ updateUserId;
+            String apiUrl = user_service_endpoint + "User/" + updateUserId;
+            String apiUrlLogin = user_service_endpoint + "UserLogin/" + updateUserId;
 
             try{
                 URL url = new URL(apiUrl);
@@ -1100,6 +1213,13 @@ public class AdminHome extends javax.swing.JFrame {
                 conn.setRequestProperty("Content-Type", "application/json; utf-8");
                 conn.setRequestProperty("Accept", "application/json");
                 conn.setDoOutput(true);
+                
+                URL loginurl = new URL(apiUrlLogin);
+                HttpURLConnection loginconn = (HttpURLConnection) loginurl.openConnection();
+                loginconn.setRequestMethod("PUT");
+                loginconn.setRequestProperty("Content-Type", "application/json; utf-8");
+                loginconn.setRequestProperty("Accept", "application/json");
+                loginconn.setDoOutput(true);
 
                 JSONObject jsonInput = new JSONObject();
                 jsonInput.put("userId", updateUserId);
@@ -1107,27 +1227,56 @@ public class AdminHome extends javax.swing.JFrame {
                 jsonInput.put("userType", updateUserType);
                 jsonInput.put("userAddress", updateUserAddress);
                 jsonInput.put("userTelephone", updateUserTelephone);
+                
+                JSONObject loginjsonInput = new JSONObject();
+                loginjsonInput.put("userId", updateUserId);
+                loginjsonInput.put("userType", updateUserType);
+                loginjsonInput.put("userPassword", updateUserPassword);
 
                 try(OutputStream os = conn.getOutputStream()) {
                     byte[] input = jsonInput.toString().getBytes("utf-8");
                     os.write(input, 0, input.length);           
                 }
+                
+                try(OutputStream loginos = loginconn.getOutputStream()) {
+                    byte[] logininput = loginjsonInput.toString().getBytes("utf-8");
+                    loginos.write(logininput, 0, logininput.length);           
+                }
 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    try(BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
-                        StringBuilder response = new StringBuilder();
-                        String responseLine = null;
-                        while ((responseLine = br.readLine()) != null) {
-                            response.append(responseLine.trim());
+                    int loginresponseCode = conn.getResponseCode();
+                    if (loginresponseCode == HttpURLConnection.HTTP_OK) {
+                    
+                        try(BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                            StringBuilder response = new StringBuilder();
+                            String responseLine = null;
+                            while ((responseLine = br.readLine()) != null) {
+                                response.append(responseLine.trim());
+                            }
+                            System.out.println(response.toString());
+                            UpdateMsgLable.setText("User Updated successfully");
                         }
-                        System.out.println(response.toString());
-                        UpdateMsgLable.setText("User Updated successfully");
+                        
+                        try(BufferedReader loginbr = new BufferedReader(new InputStreamReader(loginconn.getInputStream(), "utf-8"))) {
+                            StringBuilder loginresponse = new StringBuilder();
+                            String loginresponseLine = null;
+                            while ((loginresponseLine = loginbr.readLine()) != null) {
+                                loginresponse.append(loginresponseLine.trim());
+                            }
+                            System.out.println(loginresponse.toString());
+                            UpdateMsgLable.setText("User Updated successfully");
+                        }
+                        
+                    } else {
+                    System.out.println("User Not Updated");
+                    UpdateMsgLable.setText("User Not Updated");    
                     }
                 } else {
                     System.out.println("User Not Updated");
                     UpdateMsgLable.setText("User Not Updated");    
                 }
+                loginconn.disconnect();
                 conn.disconnect();
             } catch (Exception e){
                 e.printStackTrace();
@@ -1141,7 +1290,7 @@ public class AdminHome extends javax.swing.JFrame {
         if(searchUserId.isEmpty()){
             UpdateMsgLable.setText("Enter User ID to search");
         } else {
-            String apiUrl = "http://localhost:8002/api/User/userid/" + searchUserId;
+            String apiUrl =  user_service_endpoint + "User/userid/" + searchUserId;
 
             try{
                 URL url = new URL(apiUrl);
@@ -1182,7 +1331,7 @@ public class AdminHome extends javax.swing.JFrame {
         if(searchUserId.isEmpty()){
             DeleteMsgLable.setText("Enter User ID to search");
         } else {
-            String apiUrl = "http://localhost:8002/api/User/userid/" + searchUserId;
+            String apiUrl = user_service_endpoint + "User/userid/" + searchUserId;
 
             try{
                 URL url = new URL(apiUrl);
@@ -1224,7 +1373,7 @@ public class AdminHome extends javax.swing.JFrame {
         if(searchUserId.isEmpty()){
             ViewMsgLable.setText("Enter User ID to search");
         } else {
-            String apiUrl = "http://localhost:8002/api/User/userid/" + searchUserId;
+            String apiUrl = user_service_endpoint + "User/userid/" + searchUserId;
 
             try{
                 URL url = new URL(apiUrl);
@@ -1266,15 +1415,27 @@ public class AdminHome extends javax.swing.JFrame {
         if(deleteUserId.isEmpty()){
             DeleteMsgLable.setText("Enter User ID to search");
         } else {
-            String apiUrl = "http://localhost:8002/api/User/" + deleteUserId;
+            String apiUrl = user_service_endpoint + "User/" + deleteUserId;
+            String apiUrlLogin = user_service_endpoint + "UserLogin/" + deleteUserId;
 
             try{
                 URL url = new URL(apiUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("DELETE");
                 
+                URL loginurl = new URL(apiUrlLogin);
+                HttpURLConnection loginconn = (HttpURLConnection) loginurl.openConnection();
+                loginconn.setRequestMethod("DELETE");
+                
                 int responseCode = conn.getResponseCode();
-                if (responseCode == 200) {
+                int loginresponseCode = loginconn.getResponseCode();
+                if (responseCode == 200 && loginresponseCode == 200) {
+                    DeleteUserNameLabel.setText("");
+                    DeleteUserIdLabel.setText("");
+                    DeleteUserTypeLabel.setText("");
+                    DeleteUserAddressLabel.setText("");
+                    DeleteUserTelephoneLabel.setText("");
+                    DeleteSearchTextField.setText("");
                     DeleteMsgLable.setText("User deleted successfully");
                 } else {
                     DeleteMsgLable.setText("Failed to delete user.");
@@ -1316,6 +1477,7 @@ public class AdminHome extends javax.swing.JFrame {
         NewUserTypeComboBox.setSelectedItem("Admin");
         NewUserAddressTextField.setText("");
         NewUserTelephoneTextField.setText("");
+        NewUserPasswordTextField.setText("");
         CreateMsgLable.setText("");
     }//GEN-LAST:event_ClearAllNewUserButtonActionPerformed
 
@@ -1325,8 +1487,17 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateUserTypeComboBox.setSelectedItem("Admin");
         UpdateUserAddressTextField.setText("");
         UpdateUserTelephoneTextField.setText("");
+        UpdateUserPasswordTextField.setText("");
         UpdateMsgLable.setText("");
     }//GEN-LAST:event_UpdateClearAllButtonActionPerformed
+
+    private void LogOutLableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutLableMouseClicked
+        Login login = new Login();
+        login.setVisible(true);
+        login.pack();
+        login.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_LogOutLableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1342,12 +1513,14 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel DeleteUserNameLabel;
     private javax.swing.JLabel DeleteUserTelephoneLabel;
     private javax.swing.JLabel DeleteUserTypeLabel;
+    private javax.swing.JLabel LogOutLable;
     private javax.swing.JButton LoginButton11;
     private javax.swing.JButton LoginButton12;
     private javax.swing.JButton LoginButton13;
     private javax.swing.JTextField NewUserAddressTextField;
     private javax.swing.JTextField NewUserIdTextField;
     private javax.swing.JTextField NewUserNameTextField;
+    private javax.swing.JTextField NewUserPasswordTextField;
     private javax.swing.JTextField NewUserTelephoneTextField;
     private javax.swing.JComboBox<String> NewUserTypeComboBox;
     private javax.swing.JButton UpdateClearAllButton;
@@ -1357,6 +1530,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTextField UpdateUserAddressTextField;
     private javax.swing.JButton UpdateUserButton;
     private javax.swing.JTextField UpdateUserNameTextField;
+    private javax.swing.JTextField UpdateUserPasswordTextField;
     private javax.swing.JTextField UpdateUserTelephoneTextField;
     private javax.swing.JComboBox<String> UpdateUserTypeComboBox;
     private javax.swing.JLabel UserIdLable;
@@ -1378,6 +1552,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1385,6 +1560,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
