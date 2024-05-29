@@ -238,7 +238,7 @@ public class Login extends javax.swing.JFrame {
                                 adminHome.setLocationRelativeTo(null);
                                 this.dispose();
                             } else if (userLogin.getUserType().equals("User")) {
-                                EmployeeHome employeeHome = new EmployeeHome();
+                                EmployeeHome employeeHome = new EmployeeHome(user);
                                 employeeHome.setVisible(true);
                                 employeeHome.setLocationRelativeTo(null);
                                 employeeHome.pack();
