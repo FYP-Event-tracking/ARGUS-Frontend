@@ -3,24 +3,26 @@ import com.github.sarxos.webcam.Webcam;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+import java.net.URI;
+import java.nio.ByteBuffer;
 
 public class EmployeeHome extends javax.swing.JFrame {
     private User user;
     private String userID;
     Webcam webcam;
     Boolean isRunning = false;
-    private String track_and_count_system_endpoint;
+    private String websocketEndpoint;
+    private WebSocketClient webSocketClient;
     
     public EmployeeHome() {
         initComponents();
@@ -43,16 +45,19 @@ public class EmployeeHome extends javax.swing.JFrame {
         Properties prop = new Properties();
         try (FileInputStream input = new FileInputStream("config.properties")) {
             prop.load(input);
-            track_and_count_system_endpoint = prop.getProperty("track_and_count_system_endpoint");
+            websocketEndpoint = prop.getProperty("websocketEndpoint");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private void stopWebcam() {
-        if(isRunning){
+        if (isRunning) {
             isRunning = false;
             webcam.close();
+            if (webSocketClient != null) {
+                webSocketClient.close();
+            }
         }
     }
 
@@ -363,6 +368,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     
     class VideoFeedTaker extends Thread {
         private String logId, boxId, itemType, startTime;
+        private WebSocketClient webSocketClient;
 
         public VideoFeedTaker(String logId, String boxId, String itemType, String startTime) {
             this.logId = logId;
@@ -373,8 +379,31 @@ public class EmployeeHome extends javax.swing.JFrame {
 
         @Override
         public void run() {
-            while (isRunning) {
-                try {
+            try {
+                webSocketClient = new WebSocketClient(new URI(websocketEndpoint)) {
+                    @Override
+                    public void onOpen(ServerHandshake handshake) {
+                        System.out.println("WebSocket connection opened");
+                    }
+
+                    @Override
+                    public void onMessage(String message) {
+                        System.out.println("Received message: " + message);
+                    }
+
+                    @Override
+                    public void onClose(int code, String reason, boolean remote) {
+                        System.out.println("WebSocket connection closed: " + reason);
+                    }
+
+                    @Override
+                    public void onError(Exception ex) {
+                        System.out.println("WebSocket error: " + ex.getMessage());
+                    }
+                };
+                webSocketClient.connectBlocking();
+
+                while (isRunning) {
                     Image image = webcam.getImage();
                     Camfeed.setIcon(new ImageIcon(image));
 
@@ -382,66 +411,29 @@ public class EmployeeHome extends javax.swing.JFrame {
                     ImageIO.write((java.awt.image.RenderedImage) image, "jpg", baos);
                     byte[] imageBytes = baos.toByteArray();
 
-                    sendFrameWithMetadata(imageBytes, logId, boxId, itemType, startTime);
+                    sendFrameWithMetadata(imageBytes);
 
                     Thread.sleep(100);
-                } catch (Exception ex) {
-                    Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        private void sendFrameWithMetadata(byte[] imageBytes, String logId, String boxId, String itemType, String startTime) {
-            String apiUrl = track_and_count_system_endpoint ;
+        private void sendFrameWithMetadata(byte[] imageBytes) {
             try {
-                URL url = new URL(apiUrl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-                conn.setDoOutput(true);
-
-                OutputStream os = conn.getOutputStream();
-                String boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW";
-                String CRLF = "\r\n";
-
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"LogId\"".getBytes());
-                os.write((CRLF + CRLF + logId + CRLF).getBytes());
-
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"BoxId\"".getBytes());
-                os.write((CRLF + CRLF + boxId + CRLF).getBytes());
-
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"ItemType\"".getBytes());
-                os.write((CRLF + CRLF + itemType + CRLF).getBytes());
-                
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"UserId\"".getBytes());
-                os.write((CRLF + CRLF + userID + CRLF).getBytes());
-
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"StartTime\"".getBytes());
-                os.write((CRLF + CRLF + startTime + CRLF).getBytes());
-
-                // Send image
-                os.write(("--" + boundary + CRLF).getBytes());
-                os.write("Content-Disposition: form-data; name=\"frame\"; filename=\"frame.jpg\"".getBytes());
-                os.write((CRLF + "Content-Type: image/jpeg" + CRLF + CRLF).getBytes());
-                os.write(imageBytes);
-                os.write((CRLF + "--" + boundary + "--" + CRLF).getBytes());
-
-                os.flush();
-                os.close();
-
-                int responseCode = conn.getResponseCode();
-                if (responseCode != HttpURLConnection.HTTP_OK) {
-                    UserMsgLable.setText("Error: System error");
-                }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                baos.write(("LogId:" + logId + "\n").getBytes());
+                baos.write(("BoxId:" + boxId + "\n").getBytes());
+                baos.write(("ItemType:" + itemType + "\n").getBytes());
+                baos.write(("UserId:" + userID + "\n").getBytes());
+                baos.write(("StartTime:" + startTime + "\n").getBytes());
+                baos.write(imageBytes);
+                webSocketClient.send(ByteBuffer.wrap(baos.toByteArray()));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
+        }   
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
