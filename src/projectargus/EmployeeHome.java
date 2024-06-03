@@ -3,26 +3,21 @@ import com.github.sarxos.webcam.Webcam;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.util.Properties;
+import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import javax.imageio.ImageIO;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
-import java.net.URI;
-import java.nio.ByteBuffer;
+import java.util.Properties;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.JSONObject;
 
 public class EmployeeHome extends javax.swing.JFrame {
     private User user;
     private String userID;
     Webcam webcam;
     Boolean isRunning = false;
-    private String websocketEndpoint;
-    private WebSocketClient webSocketClient;
+    private String track_and_count_system_endpoint;
     
     public EmployeeHome() {
         initComponents();
@@ -45,19 +40,16 @@ public class EmployeeHome extends javax.swing.JFrame {
         Properties prop = new Properties();
         try (FileInputStream input = new FileInputStream("config.properties")) {
             prop.load(input);
-            websocketEndpoint = prop.getProperty("websocketEndpoint");
+            track_and_count_system_endpoint = prop.getProperty("track_and_count_system_endpoint");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private void stopWebcam() {
-        if (isRunning) {
+        if(isRunning){
             isRunning = false;
             webcam.close();
-            if (webSocketClient != null) {
-                webSocketClient.close();
-            }
         }
     }
 
@@ -338,16 +330,52 @@ public class EmployeeHome extends javax.swing.JFrame {
         if(logId.isEmpty() || boxId.isEmpty() || itemType.isEmpty()) {
             UserMsgLable.setText("Error : Input all details to start");
         } else {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-            String startTime = now.format(formatter);
-            
-            startWebcamWithData(logId, boxId, itemType, startTime);
+            UserMsgLable.setText("");
+            startWebcamWithData(logId, boxId, itemType);
         }
     }//GEN-LAST:event_StratActionPerformed
 
     private void StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopActionPerformed
-        stopWebcam();
+        String logId = (String) LogIdTextField.getText();
+        String boxId = (String) BoxIdTextField.getText();
+        String itemType = (String) ItemTypeTextField.getText();
+        
+        if(logId.isEmpty() || boxId.isEmpty() || itemType.isEmpty()) {
+            UserMsgLable.setText("Error : Input all details to start");
+        } else {
+            stopWebcam();
+        
+            String apiUrl = track_and_count_system_endpoint ;
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json; utf-8");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+
+                JSONObject jsonInput = new JSONObject();
+                jsonInput.put("Action", "Stop");
+                jsonInput.put("LogId", logId);
+                jsonInput.put("BoxId", boxId);
+                jsonInput.put("ItemType", itemType);
+                jsonInput.put("UserId", userID);
+
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = jsonInput.toString().getBytes("utf-8");
+                    os.write(input, 0, input.length);           
+                }
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    UserMsgLable.setText("Video capturing stop");
+                } else {
+                    UserMsgLable.setText("Error while stop video capturing");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }    
     }//GEN-LAST:event_StopActionPerformed
 
     private void LogOutLableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutLableMouseClicked
@@ -358,82 +386,69 @@ public class EmployeeHome extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_LogOutLableMouseClicked
 
-    private void startWebcamWithData(String logId, String boxId, String itemType, String startTime) {
+    private void startWebcamWithData(String logId, String boxId, String itemType) {
+        sendMetadata(logId, boxId, itemType);
         if(!isRunning){
             isRunning = true;
             webcam.open();
-            new VideoFeedTaker(logId, boxId, itemType, startTime).start();
+            new VideoFeedTaker(logId, boxId, itemType).start();
+        }
+    }
+    
+    private void sendMetadata(String logId, String boxId, String itemType) {
+        String apiUrl = track_and_count_system_endpoint ;
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            JSONObject jsonInput = new JSONObject();
+            jsonInput.put("Action", "Start");
+            jsonInput.put("LogId", logId);
+            jsonInput.put("BoxId", boxId);
+            jsonInput.put("ItemType", itemType);
+            jsonInput.put("UserId", userID);
+
+            try(OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonInput.toString().getBytes("utf-8");
+                os.write(input, 0, input.length);           
+            }
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                UserMsgLable.setText("Video is capturing....");
+            } else {
+                UserMsgLable.setText("Error while video capturing");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     
     class VideoFeedTaker extends Thread {
-        private String logId, boxId, itemType, startTime;
-        private WebSocketClient webSocketClient;
+        private String logId, boxId, itemType;
 
-        public VideoFeedTaker(String logId, String boxId, String itemType, String startTime) {
+        public VideoFeedTaker(String logId, String boxId, String itemType) {
             this.logId = logId;
             this.boxId = boxId;
             this.itemType = itemType;
-            this.startTime = startTime;
         }
 
         @Override
         public void run() {
-            try {
-                webSocketClient = new WebSocketClient(new URI(websocketEndpoint)) {
-                    @Override
-                    public void onOpen(ServerHandshake handshake) {
-                        System.out.println("WebSocket connection opened");
-                    }
-
-                    @Override
-                    public void onMessage(String message) {
-                        System.out.println("Received message: " + message);
-                    }
-
-                    @Override
-                    public void onClose(int code, String reason, boolean remote) {
-                        System.out.println("WebSocket connection closed: " + reason);
-                    }
-
-                    @Override
-                    public void onError(Exception ex) {
-                        System.out.println("WebSocket error: " + ex.getMessage());
-                    }
-                };
-                webSocketClient.connectBlocking();
-
-                while (isRunning) {
+            while (isRunning) {
+                try {
                     Image image = webcam.getImage();
                     Camfeed.setIcon(new ImageIcon(image));
-
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write((java.awt.image.RenderedImage) image, "jpg", baos);
-                    byte[] imageBytes = baos.toByteArray();
-
-                    sendFrameWithMetadata(imageBytes);
-
                     Thread.sleep(100);
+                } catch (Exception ex) {
+                    Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        private void sendFrameWithMetadata(byte[] imageBytes) {
-            try {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                baos.write(("LogId:" + logId + "\n").getBytes());
-                baos.write(("BoxId:" + boxId + "\n").getBytes());
-                baos.write(("ItemType:" + itemType + "\n").getBytes());
-                baos.write(("UserId:" + userID + "\n").getBytes());
-                baos.write(("StartTime:" + startTime + "\n").getBytes());
-                baos.write(imageBytes);
-                webSocketClient.send(ByteBuffer.wrap(baos.toByteArray()));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }   
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
