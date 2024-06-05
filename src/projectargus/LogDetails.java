@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LogDetails extends javax.swing.JFrame {
 
@@ -65,8 +67,18 @@ public class LogDetails extends javax.swing.JFrame {
                     BoxIdLable.setText(log.getBoxId());
                     UserIdLable.setText(log.getUserId());
                     ItemTypeLable.setText(log.getItemType());
-                    StartTimeLable.setText(log.getStartTime());
-                    EndTimeLable.setText(log.getEndTime());
+                    
+                    LocalDateTime startTime = LocalDateTime.parse(log.getStartTime());
+                    startTime = startTime.plusHours(5).plusMinutes(30);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedStartTime = startTime.format(formatter);
+                    StartTimeLable.setText(formattedStartTime.replace("T", " "));
+                    
+                    LocalDateTime endTime = LocalDateTime.parse(log.getEndTime());
+                    endTime = endTime.plusHours(5).plusMinutes(30);
+                    String formattedEndTime = endTime.format(formatter);
+                    EndTimeLable.setText(formattedEndTime.replace("T", " "));
+                    
                     TotalCountLable.setText(String.valueOf(log.getTotalCount()));
                     String fullLog = log.getFullLogFile().replace("\n", System.lineSeparator());
                     FullLogTextArea.setText(fullLog);

@@ -2050,7 +2050,7 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_UserLogSearchButtonActionPerformed
 
     private String extractLogId(String itemText) {
-        Pattern pattern = Pattern.compile("LogId : (\\d+)");
+        Pattern pattern = Pattern.compile("LogId : (\\w+)");
         Matcher matcher = pattern.matcher(itemText);
         if (matcher.find()) {
             return matcher.group(1); 

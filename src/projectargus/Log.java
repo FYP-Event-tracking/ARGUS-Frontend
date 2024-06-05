@@ -1,5 +1,8 @@
 package projectargus;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 class Log {
     private String logId;
     private String boxId;
@@ -12,7 +15,11 @@ class Log {
     
     @Override
     public String toString() {
-        return startTime + "       LogId : " + logId + " : " + "      BoxId : " + boxId + "      ItemType : " + itemType + "     UserId : " + userId + "       TotalCount : " + totalCount;
+        LocalDateTime startTimeC = LocalDateTime.parse(startTime);
+        startTimeC = startTimeC.plusHours(5).plusMinutes(30);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedStartTime = startTimeC.format(formatter);
+        return formattedStartTime.replace("T", " ") + "       LogId : " + logId + "      BoxId : " + boxId + "      ItemType : " + itemType + "     UserId : " + userId + "       TotalCount : " + totalCount;
     }
 
     public String getLogId() { return logId; }
