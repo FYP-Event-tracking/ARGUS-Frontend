@@ -23,6 +23,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     Boolean isRunning = false;
     private String websocketEndpoint;
     private WebSocketClient webSocketClient;
+    private VideoFeedTaker videoFeedTaker;
     
     public EmployeeHome() {
         initComponents();
@@ -55,9 +56,13 @@ public class EmployeeHome extends javax.swing.JFrame {
         if (isRunning) {
             isRunning = false;
             webcam.close();
+            Camfeed.setIcon(new ImageIcon());
+            if (videoFeedTaker != null) {
+                videoFeedTaker.stopRunning();
+            }
             if (webSocketClient != null) {
                 webSocketClient.close();
-            }
+            }        
         }
     }
 
@@ -369,7 +374,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     
     class VideoFeedTaker extends Thread {
         private String logId, boxId, itemType, startTime;
-        private WebSocketClient webSocketClient;
+        private boolean running = true;
 
         public VideoFeedTaker(String logId, String boxId, String itemType, String startTime) {
             this.logId = logId;
@@ -436,6 +441,10 @@ public class EmployeeHome extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         } 
+        
+        public void stopRunning() {
+            running = false;
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
