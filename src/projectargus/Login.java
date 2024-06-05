@@ -10,22 +10,22 @@ import java.io.FileInputStream;
 
 public class Login extends javax.swing.JFrame {
     
-    private String user_service_endpoint;
+    private String user_service_endpoint = "http://localhost:8007/user/api/";
     
     public Login() {
         initComponents();
-        loadConfig();
+//        loadConfig();
     }
     
-    private void loadConfig() {
-        Properties prop = new Properties();
-        try (FileInputStream input = new FileInputStream("config.properties")) {
-            prop.load(input);
-            user_service_endpoint = prop.getProperty("user_service_endpoint");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    private void loadConfig() {
+//        Properties prop = new Properties();
+//        try (FileInputStream input = new FileInputStream("config.properties")) {
+//            prop.load(input);
+//            user_service_endpoint = prop.getProperty("user_service_endpoint");
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
