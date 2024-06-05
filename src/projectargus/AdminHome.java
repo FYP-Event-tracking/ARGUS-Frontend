@@ -134,9 +134,9 @@ public class AdminHome extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
         UserLogSearchTextField = new javax.swing.JTextField();
-        UserLogSearchButton = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         UserLogList = new javax.swing.JList<>();
+        UserLogSearchButton = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         DateLogSearchTextField = new javax.swing.JTextField();
         jLabel62 = new javax.swing.JLabel();
@@ -820,6 +820,14 @@ public class AdminHome extends javax.swing.JFrame {
         UserLogSearchTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         UserLogSearchTextField.setText("Search using User ID");
 
+        UserLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        UserLogList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UserLogListMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(UserLogList);
+
         UserLogSearchButton.setBackground(new java.awt.Color(201, 34, 42));
         UserLogSearchButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UserLogSearchButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -830,14 +838,6 @@ public class AdminHome extends javax.swing.JFrame {
             }
         });
 
-        UserLogList.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        UserLogList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserLogListMouseClicked(evt);
-            }
-        });
-        jScrollPane6.setViewportView(UserLogList);
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -845,17 +845,17 @@ public class AdminHome extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(494, 494, 494)
-                        .addComponent(UserLogSearchButton))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(UserLogSearchButton))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(439, 439, 439)
                         .addComponent(jLabel44)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -863,11 +863,12 @@ public class AdminHome extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel44)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UserLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(UserLogSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UserLogSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane3.addTab("Using User ID", jPanel9);
@@ -1633,54 +1634,6 @@ public class AdminHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeleteUserButtonActionPerformed
 
-    private void UserLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserLogSearchButtonActionPerformed
-        String logSearch = UserLogSearchTextField.getText();
-        UserLogList.setListData(new String[0]);
-
-        if (logSearch.isEmpty()) {
-            UserLogList.setListData(new String[]{"No logs for that User ID available"});      
-        } else {
-            String apiUrl = log_service_endpoint + "Log/userid/" + logSearch;
-
-            try {
-                URL url = new URL(apiUrl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-
-                int responseCode = conn.getResponseCode();
-                if (responseCode == 200) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String inputLine;
-                    StringBuilder content = new StringBuilder();
-
-                    while ((inputLine = in.readLine()) != null) {
-                        content.append(inputLine);
-                    }
-                    in.close();
-                    conn.disconnect();
-
-                    Gson gson = new Gson();
-                    Log[] logs = gson.fromJson(content.toString(), Log[].class);
-
-                    if (logs.length == 0) {
-                        UserLogList.setListData(new String[]{"No logs found for this User ID"});
-                    } else {
-                        String[] logEntries = new String[logs.length];
-                        for (int i = 0; i < logs.length; i++) {
-                            logEntries[i] = logs[i].toString();
-                        }
-                        UserLogList.setListData(logEntries);
-                    }
-
-                } else {
-                    UserLogList.setListData(new String[]{"No logs for that User ID available"});      
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_UserLogSearchButtonActionPerformed
-
     private void DateLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateLogSearchButtonActionPerformed
         String logSearch = DateLogSearchTextField.getText();
         DateLogList.setListData(new String[0]);
@@ -2047,6 +2000,54 @@ public class AdminHome extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_AllLogListMouseClicked
+
+    private void UserLogSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserLogSearchButtonActionPerformed
+        String logSearch = UserLogSearchTextField.getText();
+        UserLogList.setListData(new String[0]);
+
+        if (logSearch.isEmpty()) {
+            UserLogList.setListData(new String[]{"No logs for that User ID available"});      
+        } else {
+            String apiUrl = log_service_endpoint + "Log/userid/" + logSearch;
+
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    conn.disconnect();
+
+                    Gson gson = new Gson();
+                    Log[] logs = gson.fromJson(content.toString(), Log[].class);
+
+                    if (logs.length == 0) {
+                        UserLogList.setListData(new String[]{"No logs found for this User ID"});
+                    } else {
+                        String[] logEntries = new String[logs.length];
+                        for (int i = 0; i < logs.length; i++) {
+                            logEntries[i] = logs[i].toString();
+                        }
+                        UserLogList.setListData(logEntries);
+                    }
+
+                } else {
+                    UserLogList.setListData(new String[]{"No logs for that User ID available"});      
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_UserLogSearchButtonActionPerformed
 
     private String extractLogId(String itemText) {
         Pattern pattern = Pattern.compile("LogId : (\\d+)");
