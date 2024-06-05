@@ -21,18 +21,18 @@ public class EmployeeHome extends javax.swing.JFrame {
     private String userID;
     Webcam webcam;
     Boolean isRunning = false;
-    private String websocketEndpoint;
+    private String websocketEndpoint = "ws://localhost:8009/";
     private WebSocketClient webSocketClient;
     private VideoFeedTaker videoFeedTaker;
     
     public EmployeeHome() {
         initComponents();
-        loadConfig();
+//        loadConfig();
     }
 
     public EmployeeHome(User user) {
         initComponents();
-        loadConfig();
+//        loadConfig();
         webcam = Webcam.getDefault();
         webcam.setViewSize(new Dimension(640,480));
         
@@ -42,15 +42,15 @@ public class EmployeeHome extends javax.swing.JFrame {
         userID = user.getUserId();
     }
     
-    private void loadConfig() {
-        Properties prop = new Properties();
-        try (FileInputStream input = new FileInputStream("config.properties")) {
-            prop.load(input);
-            websocketEndpoint = prop.getProperty("websocketEndpoint");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    private void loadConfig() {
+//        Properties prop = new Properties();
+//        try (FileInputStream input = new FileInputStream("config.properties")) {
+//            prop.load(input);
+//            websocketEndpoint = prop.getProperty("websocketEndpoint");
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     private void stopWebcam() {
         if (isRunning) {

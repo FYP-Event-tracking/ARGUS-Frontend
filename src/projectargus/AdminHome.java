@@ -19,34 +19,34 @@ import org.json.JSONObject;
 public class AdminHome extends javax.swing.JFrame {
 
     private User user;
-    private String user_service_endpoint;
-    private String log_service_endpoint;
+    private String user_service_endpoint = "http://localhost:8007/user/api/";
+    private String log_service_endpoint = "http://localhost:8007/log/api/";
     
     public AdminHome() {
         initComponents();
-        loadConfig();
+//        loadConfig();
     }
     
     public AdminHome(User user){
         this.user = user;
         initComponents();
-        loadConfig();
+//        loadConfig();
         
         UserNameLable.setText(user.getUserName());
         UserTypeLable.setText(user.getUserType());
         UserIdLable.setText(user.getUserId());
     }
     
-    private void loadConfig() {
-        Properties prop = new Properties();
-        try (FileInputStream input = new FileInputStream("config.properties")) {
-            prop.load(input);
-            user_service_endpoint = prop.getProperty("user_service_endpoint");
-            log_service_endpoint = prop.getProperty("log_service_endpoint");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    private void loadConfig() {
+//        Properties prop = new Properties();
+//        try (FileInputStream input = new FileInputStream("config.properties")) {
+//            prop.load(input);
+//            user_service_endpoint = prop.getProperty("user_service_endpoint");
+//            log_service_endpoint = prop.getProperty("log_service_endpoint");
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class LogDetails extends javax.swing.JFrame {
 
     private String logId;
-    private String log_service_endpoint;
+    private String log_service_endpoint = "http://localhost:8007/log/api/";
     
     public LogDetails() {
         initComponents();   
@@ -23,19 +23,19 @@ public class LogDetails extends javax.swing.JFrame {
     public LogDetails(String logId) {
         this.logId = logId;
         initComponents();
-        loadConfig();
+//        loadConfig();
         getLogData();
     }
     
-    private void loadConfig() {
-        Properties prop = new Properties();
-        try (FileInputStream input = new FileInputStream("config.properties")) {
-            prop.load(input);
-            log_service_endpoint = prop.getProperty("log_service_endpoint");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    private void loadConfig() {
+//        Properties prop = new Properties();
+//        try (FileInputStream input = new FileInputStream("config.properties")) {
+//            prop.load(input);
+//            log_service_endpoint = prop.getProperty("log_service_endpoint");
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
     
     private void getLogData(){
         String apiUrl = log_service_endpoint + "Log/logid/" + logId;
