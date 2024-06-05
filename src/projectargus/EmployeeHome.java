@@ -94,6 +94,8 @@ public class EmployeeHome extends javax.swing.JFrame {
         LogOutLable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Project Argus");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(201, 34, 42));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 600));
