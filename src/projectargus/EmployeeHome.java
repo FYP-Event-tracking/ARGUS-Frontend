@@ -3,6 +3,7 @@ import com.github.sarxos.webcam.Webcam;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,16 @@ import java.net.URI;
 import java.nio.ByteBuffer;
 import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
+import java.util.Base64;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import javax.swing.JFileChooser;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class EmployeeHome extends javax.swing.JFrame {
     private User user;
@@ -24,6 +35,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     private String websocketEndpoint = "ws://localhost:8009/";
     private WebSocketClient webSocketClient;
     private VideoFeedTaker videoFeedTaker;
+    private File selectedFile;
     
     public EmployeeHome() {
         initComponents();
@@ -90,6 +102,8 @@ public class EmployeeHome extends javax.swing.JFrame {
         Strat = new javax.swing.JButton();
         Stop = new javax.swing.JButton();
         UserMsgLable = new javax.swing.JLabel();
+        UploadVideoButton = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         Camfeed = new javax.swing.JLabel();
         LogOutLable = new javax.swing.JLabel();
 
@@ -161,6 +175,16 @@ public class EmployeeHome extends javax.swing.JFrame {
         UserMsgLable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         UserMsgLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        UploadVideoButton.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        UploadVideoButton.setText("Upload Video");
+        UploadVideoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UploadVideoButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("OR");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -186,6 +210,15 @@ public class EmployeeHome extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(UserMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(192, 192, 192))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(UploadVideoButton)
+                        .addGap(142, 142, 142))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,11 +237,15 @@ public class EmployeeHome extends javax.swing.JFrame {
                 .addComponent(ItemTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(UserMsgLable)
-                .addGap(61, 61, 61)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UploadVideoButton)
+                .addGap(54, 54, 54))
         );
 
         Camfeed.setBackground(new java.awt.Color(204, 255, 255));
@@ -366,6 +403,133 @@ public class EmployeeHome extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_LogOutLableMouseClicked
 
+    private void UploadVideoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UploadVideoButtonActionPerformed
+        String logId = (String) LogIdTextField.getText();
+        String boxId = (String) BoxIdTextField.getText();
+        String itemType = (String) ItemTypeTextField.getText();
+
+        if (logId.isEmpty() || boxId.isEmpty() || itemType.isEmpty()) {
+            UserMsgLable.setText("Error: Input all details to send video");
+        } else {
+            JFileChooser fileChooser = new JFileChooser();
+
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    return f.isDirectory() || f.getName().toLowerCase().endsWith(".mp4");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "MP4 Videos (*.mp4)";
+                }
+            });
+
+            int returnValue = fileChooser.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                UserMsgLable.setText("Processing....");
+                
+                String response = uploadVideoFile(selectedFile, logId, boxId, itemType);
+
+                if (response.equals("200")) {
+                    UserMsgLable.setText("Processing Complete");
+                } else {
+                    UserMsgLable.setText("Error: " + response);
+                }
+
+            } else {
+                UserMsgLable.setText("No Video file selected");
+            }
+        }
+    }//GEN-LAST:event_UploadVideoButtonActionPerformed
+
+    private String uploadVideoFile(File videoFile, String logId, String boxId, String itemType) {
+        String urlString = "http://localhost:8011/submit";
+        String boundary = Long.toHexString(System.currentTimeMillis()); // Just a random string
+        String charset = "UTF-8";
+        String CRLF = "\r\n"; // Line separator required by multipart/form-data
+
+        HttpURLConnection connection = null;
+        OutputStream output = null;
+        PrintWriter writer = null;
+
+        try {
+            URL url = new URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            connection.setRequestProperty("User-Agent", "Java client");
+
+            output = connection.getOutputStream();
+            writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
+
+            // Send normal parameters
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"logId\"").append(CRLF);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+            writer.append(CRLF).append(logId).append(CRLF).flush();
+
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"boxId\"").append(CRLF);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+            writer.append(CRLF).append(boxId).append(CRLF).flush();
+
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"itemType\"").append(CRLF);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+            writer.append(CRLF).append(itemType).append(CRLF).flush();
+            
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"userId\"").append(CRLF);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+            writer.append(CRLF).append(userID).append(CRLF).flush();
+
+            // Send binary file
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + videoFile.getName() + "\"").append(CRLF);
+            writer.append("Content-Type: video/mp4").append(CRLF);
+            writer.append(CRLF).flush();
+            FileInputStream inputStream = new FileInputStream(videoFile);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+            output.flush(); // Important before continuing with writer!
+            inputStream.close();
+            writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
+
+            // End of multipart/form-data.
+            writer.append("--" + boundary + "--").append(CRLF).flush();
+
+            // Check the server's response code
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                return "200";
+            } else {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                return response.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        } finally {
+            if (writer != null) writer.close();
+            if (output != null) try { output.close(); } catch (IOException e) { e.printStackTrace(); }
+            if (connection != null) connection.disconnect();
+        }
+    }
+    
     private void startWebcamWithData(String logId, String boxId, String itemType, String startTime) {
         if(!isRunning){
             isRunning = true;
@@ -436,7 +600,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                 baos.write(("ItemType:" + itemType + "\n").getBytes());
                 baos.write(("UserId:" + userID + "\n").getBytes());
                 baos.write(("StartTime:" + startTime + "\n").getBytes());
-                String imageByteString = new String(imageBytes);
+                String imageByteString = Base64.getEncoder().encodeToString(imageBytes);
                 baos.write(("ImageData:" + imageByteString + "\n").getBytes());
                 webSocketClient.send(ByteBuffer.wrap(baos.toByteArray()));
             } catch (Exception ex) {
@@ -457,6 +621,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     private javax.swing.JLabel LogOutLable;
     private javax.swing.JButton Stop;
     private javax.swing.JButton Strat;
+    private javax.swing.JButton UploadVideoButton;
     private javax.swing.JLabel UserIdLable;
     private javax.swing.JLabel UserMsgLable;
     private javax.swing.JLabel UserNameLable;
@@ -468,6 +633,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
