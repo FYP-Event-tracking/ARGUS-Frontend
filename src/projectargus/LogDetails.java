@@ -69,13 +69,11 @@ public class LogDetails extends javax.swing.JFrame {
                     ItemTypeLable.setText(log.getItemType());
                     
                     LocalDateTime startTime = LocalDateTime.parse(log.getStartTime());
-                    startTime = startTime.plusHours(5).plusMinutes(30);
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     String formattedStartTime = startTime.format(formatter);
                     StartTimeLable.setText(formattedStartTime.replace("T", " "));
                     
                     LocalDateTime endTime = LocalDateTime.parse(log.getEndTime());
-                    endTime = endTime.plusHours(5).plusMinutes(30);
                     String formattedEndTime = endTime.format(formatter);
                     EndTimeLable.setText(formattedEndTime.replace("T", " "));
                     
@@ -179,11 +177,6 @@ public class LogDetails extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(UserIdLable)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -211,7 +204,12 @@ public class LogDetails extends javax.swing.JFrame {
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(TotalCountLable)))
-                        .addGap(337, 337, 337))))
+                        .addGap(337, 337, 337))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(UserIdLable)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
