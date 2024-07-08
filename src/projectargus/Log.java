@@ -16,7 +16,7 @@ class Log {
     @Override
     public String toString() {
         LocalDateTime startTimeC = LocalDateTime.parse(startTime);
-        startTimeC = startTimeC.plusHours(5).plusMinutes(30);
+//        startTimeC = startTimeC.plusHours(5).plusMinutes(30);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedStartTime = startTimeC.format(formatter);
         return formattedStartTime.replace("T", " ") + "       LogId : " + logId + "      BoxId : " + boxId + "      ItemType : " + itemType + "     UserId : " + userId + "       TotalCount : " + totalCount;
