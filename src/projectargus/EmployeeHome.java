@@ -26,6 +26,10 @@ import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EmployeeHome extends javax.swing.JFrame {
     private User user;
@@ -45,8 +49,41 @@ public class EmployeeHome extends javax.swing.JFrame {
     public EmployeeHome(User user) {
         initComponents();
 //        loadConfig();
-        webcam = Webcam.getDefault();
-        webcam.setViewSize(new Dimension(640,480));
+        List<Webcam> webcams = Webcam.getWebcams();
+        if (webcams.isEmpty()) {
+            UserMsgLable.setText("No webcams found.");
+        } else {
+        String[] webcamNames = new String[webcams.size()];
+        for (int i = 0; i < webcams.size(); i++) {
+            webcamNames[i] = webcams.get(i).getName();
+        }
+
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(webcamNames);
+        CamComboBox.setModel(comboBoxModel);
+        CamComboBox.setSelectedIndex(0);
+        
+         CamComboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selectedCameraName = (String) CamComboBox.getSelectedItem();
+                    for (Webcam cam : webcams) {
+                        if (cam.getName().equals(selectedCameraName)) {
+                            if (webcam != null && webcam.isOpen()) {
+                                webcam.close();
+                            }
+                            webcam = cam;
+                            webcam.setViewSize(new Dimension(640, 480));
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+        
+        if (!webcams.isEmpty()) {
+            webcam = Webcam.getDefault();
+            webcam.setViewSize(new Dimension(640, 480));
+        }
         
         UserNameLable.setText(user.getUserName());
         UserPositionLable.setText(user.getUserType());
@@ -104,6 +141,7 @@ public class EmployeeHome extends javax.swing.JFrame {
         UserMsgLable = new javax.swing.JLabel();
         UploadVideoButton = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        CamComboBox = new javax.swing.JComboBox<>();
         Camfeed = new javax.swing.JLabel();
         LogOutLable = new javax.swing.JLabel();
 
@@ -185,6 +223,8 @@ public class EmployeeHome extends javax.swing.JFrame {
 
         jLabel8.setText("OR");
 
+        CamComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -194,7 +234,11 @@ public class EmployeeHome extends javax.swing.JFrame {
                 .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(193, 193, 193))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -208,42 +252,42 @@ public class EmployeeHome extends javax.swing.JFrame {
                             .addComponent(BoxIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(UserMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(UploadVideoButton))
+                            .addComponent(UserMsgLable, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(CamComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(192, 192, 192))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(UploadVideoButton)
-                        .addGap(142, 142, 142))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BoxIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ItemTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
+                .addComponent(CamComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(UserMsgLable)
                 .addGap(29, 29, 29)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Strat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Stop, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(UploadVideoButton)
                 .addGap(54, 54, 54))
         );
@@ -615,6 +659,7 @@ public class EmployeeHome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BoxIdTextField;
+    private javax.swing.JComboBox<String> CamComboBox;
     private javax.swing.JLabel Camfeed;
     private javax.swing.JTextField ItemTypeTextField;
     private javax.swing.JTextField LogIdTextField;

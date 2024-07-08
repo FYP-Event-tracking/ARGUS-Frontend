@@ -255,7 +255,12 @@
                               <Component id="Strat" min="-2" pref="95" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="Stop" min="-2" pref="95" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -272,23 +277,20 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="UserMsgLable" min="-2" pref="350" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                                              <Component id="UploadVideoButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="UserMsgLable" min="-2" pref="350" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                                      <Component id="CamComboBox" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="31" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="UploadVideoButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -297,26 +299,28 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="LogIdTextField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="BoxIdTextField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="ItemTypeTextField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="CamComboBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               <Component id="UserMsgLable" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="Strat" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                                   <Component id="Stop" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="35" max="32767" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="UploadVideoButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           </Group>
@@ -420,6 +424,21 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="OR"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="CamComboBox">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="4">
+                            <StringItem index="0" value="Item 1"/>
+                            <StringItem index="1" value="Item 2"/>
+                            <StringItem index="2" value="Item 3"/>
+                            <StringItem index="3" value="Item 4"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
