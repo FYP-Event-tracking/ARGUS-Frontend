@@ -31,7 +31,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EmployeeHome extends javax.swing.JFrame {
+public class EmployeeHomeContinuos extends javax.swing.JFrame {
     private User user;
     private String userID;
     Webcam webcam;
@@ -41,12 +41,12 @@ public class EmployeeHome extends javax.swing.JFrame {
     private VideoFeedTaker videoFeedTaker;
     private File selectedFile;
     
-    public EmployeeHome() {
+    public EmployeeHomeContinuos() {
         initComponents();
 //        loadConfig();
     }
 
-    public EmployeeHome(User user) {
+    public EmployeeHomeContinuos(User user) {
         this.user = user;
         initComponents();
 //        loadConfig();
@@ -131,8 +131,6 @@ public class EmployeeHome extends javax.swing.JFrame {
         UserIdLable = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        BoxIdTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         ItemTypeTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -145,7 +143,7 @@ public class EmployeeHome extends javax.swing.JFrame {
         CamComboBox = new javax.swing.JComboBox<>();
         Camfeed = new javax.swing.JLabel();
         LogOutLable = new javax.swing.JLabel();
-        ContinuosButton = new javax.swing.JButton();
+        BoxButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project Argus");
@@ -178,11 +176,6 @@ public class EmployeeHome extends javax.swing.JFrame {
         UserIdLable.setText("emp123");
 
         jPanel4.setPreferredSize(new java.awt.Dimension(1076, 486));
-
-        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jLabel3.setText("Box ID : ");
-
-        BoxIdTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel5.setText("Item Type :");
@@ -249,9 +242,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(LogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(ItemTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(BoxIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ItemTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,15 +258,11 @@ public class EmployeeHome extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(72, 72, 72)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(LogIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BoxIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ItemTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,10 +318,10 @@ public class EmployeeHome extends javax.swing.JFrame {
             }
         });
 
-        ContinuosButton.setText("Continuos monitoring");
-        ContinuosButton.addActionListener(new java.awt.event.ActionListener() {
+        BoxButton.setText("Box monitoring");
+        BoxButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContinuosButtonActionPerformed(evt);
+                BoxButtonActionPerformed(evt);
             }
         });
 
@@ -350,6 +337,12 @@ public class EmployeeHome extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UserIdLable)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BoxButton))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -360,13 +353,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(UserPositionLable)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(LogOutLable))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UserIdLable)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ContinuosButton))))
+                                .addComponent(LogOutLable))))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -393,7 +380,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(UserIdLable)
-                            .addComponent(ContinuosButton))))
+                            .addComponent(BoxButton))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -432,10 +419,9 @@ public class EmployeeHome extends javax.swing.JFrame {
 
     private void StratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StratActionPerformed
         String logId = (String) LogIdTextField.getText();
-        String boxId = (String) BoxIdTextField.getText();
         String itemType = (String) ItemTypeTextField.getText();
         
-        if(logId.isEmpty() || boxId.isEmpty() || itemType.isEmpty()) {
+        if(logId.isEmpty() || itemType.isEmpty()) {
             UserMsgLable.setText("Error : Input all details to start");
         } else {
             UserMsgLable.setText("");
@@ -443,7 +429,7 @@ public class EmployeeHome extends javax.swing.JFrame {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             String startTime = now.format(formatter);
             
-            startWebcamWithData(logId, boxId, itemType, startTime);
+            startWebcamWithData(logId, itemType, startTime);
         }
     }//GEN-LAST:event_StratActionPerformed
 
@@ -461,10 +447,9 @@ public class EmployeeHome extends javax.swing.JFrame {
 
     private void UploadVideoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UploadVideoButtonActionPerformed
         String logId = (String) LogIdTextField.getText();
-        String boxId = (String) BoxIdTextField.getText();
         String itemType = (String) ItemTypeTextField.getText();
 
-        if (logId.isEmpty() || boxId.isEmpty() || itemType.isEmpty()) {
+        if (logId.isEmpty() || itemType.isEmpty()) {
             UserMsgLable.setText("Error: Input all details to send video");
         } else {
             JFileChooser fileChooser = new JFileChooser();
@@ -487,7 +472,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                 File selectedFile = fileChooser.getSelectedFile();
                 UserMsgLable.setText("Processing....");
                 
-                String response = uploadVideoFile(selectedFile, logId, boxId, itemType);
+                String response = uploadVideoFile(selectedFile, logId, itemType);
 
                 if (response.equals("200")) {
                     UserMsgLable.setText("Processing Complete");
@@ -501,16 +486,16 @@ public class EmployeeHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UploadVideoButtonActionPerformed
 
-    private void ContinuosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContinuosButtonActionPerformed
-        EmployeeHomeContinuos employeeHomeContinuos = new EmployeeHomeContinuos(user);
-        employeeHomeContinuos.setVisible(true);
-        employeeHomeContinuos.pack();
-        employeeHomeContinuos.setLocationRelativeTo(null);
+    private void BoxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxButtonActionPerformed
+        EmployeeHome employeeHome = new EmployeeHome(user);
+        employeeHome.setVisible(true);
+        employeeHome.pack();
+        employeeHome.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_ContinuosButtonActionPerformed
+    }//GEN-LAST:event_BoxButtonActionPerformed
 
-    private String uploadVideoFile(File videoFile, String logId, String boxId, String itemType) {
-        String urlString = "http://localhost:8011/submit";
+    private String uploadVideoFile(File videoFile, String logId, String itemType) {
+        String urlString = "http://localhost:8014/submit";
         String boundary = Long.toHexString(System.currentTimeMillis()); // Just a random string
         String charset = "UTF-8";
         String CRLF = "\r\n"; // Line separator required by multipart/form-data
@@ -535,11 +520,6 @@ public class EmployeeHome extends javax.swing.JFrame {
             writer.append("Content-Disposition: form-data; name=\"logId\"").append(CRLF);
             writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
             writer.append(CRLF).append(logId).append(CRLF).flush();
-
-            writer.append("--" + boundary).append(CRLF);
-            writer.append("Content-Disposition: form-data; name=\"boxId\"").append(CRLF);
-            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
-            writer.append(CRLF).append(boxId).append(CRLF).flush();
 
             writer.append("--" + boundary).append(CRLF);
             writer.append("Content-Disposition: form-data; name=\"itemType\"").append(CRLF);
@@ -594,21 +574,20 @@ public class EmployeeHome extends javax.swing.JFrame {
         }
     }
     
-    private void startWebcamWithData(String logId, String boxId, String itemType, String startTime) {
+    private void startWebcamWithData(String logId, String itemType, String startTime) {
         if(!isRunning){
             isRunning = true;
             webcam.open();
-            new VideoFeedTaker(logId, boxId, itemType, startTime).start();
+            new VideoFeedTaker(logId, itemType, startTime).start();
         }
     }
     
     class VideoFeedTaker extends Thread {
-        private String logId, boxId, itemType, startTime;
+        private String logId, itemType, startTime;
         private boolean running = true;
 
-        public VideoFeedTaker(String logId, String boxId, String itemType, String startTime) {
+        public VideoFeedTaker(String logId, String itemType, String startTime) {
             this.logId = logId;
-            this.boxId = boxId;
             this.itemType = itemType;
             this.startTime = startTime;
         }
@@ -652,7 +631,7 @@ public class EmployeeHome extends javax.swing.JFrame {
                     Thread.sleep(100);
                 }
             } catch (Exception ex) {
-                Logger.getLogger(EmployeeHome.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EmployeeHomeContinuos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -660,7 +639,6 @@ public class EmployeeHome extends javax.swing.JFrame {
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 baos.write(("LogId:" + logId + "\n").getBytes());
-                baos.write(("BoxId:" + boxId + "\n").getBytes());
                 baos.write(("ItemType:" + itemType + "\n").getBytes());
                 baos.write(("UserId:" + userID + "\n").getBytes());
                 baos.write(("StartTime:" + startTime + "\n").getBytes());
@@ -678,10 +656,9 @@ public class EmployeeHome extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField BoxIdTextField;
+    private javax.swing.JButton BoxButton;
     private javax.swing.JComboBox<String> CamComboBox;
     private javax.swing.JLabel Camfeed;
-    private javax.swing.JButton ContinuosButton;
     private javax.swing.JTextField ItemTypeTextField;
     private javax.swing.JTextField LogIdTextField;
     private javax.swing.JLabel LogOutLable;
@@ -694,7 +671,6 @@ public class EmployeeHome extends javax.swing.JFrame {
     private javax.swing.JLabel UserPositionLable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
